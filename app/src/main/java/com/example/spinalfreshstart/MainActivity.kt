@@ -9,6 +9,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val button = findViewById<Button>(R.id.button1)
+        button.setOnClickListener {
+            val intent = Intent(this, FirstPage::class.java)
+            startActivity(intent)
+        }
+
     }
 }
 
@@ -16,13 +23,6 @@ class FirstPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.page1)
-
-
-        val button = findViewById<Button>(R.id.button1)
-        button.setOnClickListener {
-            val intent = Intent(this, FirstPage::class.java)
-            startActivity(intent)
-        }
     }
 
 }
