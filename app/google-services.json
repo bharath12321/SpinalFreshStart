@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "590954768260",
+    "project_id": "neuroflex-2023",
+    "storage_bucket": "neuroflex-2023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590954768260:android:7e06875d95737f6fe09fd1",
+        "android_client_info": {
+          "package_name": "com.aut.neuroflex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590954768260-l2gui77eh0ir5hv3dug1lplcmpqbbqvb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw6MpmGAWbAGRTqsO3ezFZ8RZnRKU5V_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590954768260-l2gui77eh0ir5hv3dug1lplcmpqbbqvb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

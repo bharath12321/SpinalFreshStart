@@ -16,7 +16,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:contentDescription="@string/todo"
             app:layout_constraintHorizontal_bias="0.4"
-            app:layout_constraintVertical_bias="0.029"/>
+            app:layout_constraintVertical_bias="0.029" />
 
     <TextView
             android:id="@+id/signinText"
