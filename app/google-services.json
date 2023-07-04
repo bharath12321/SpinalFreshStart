@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:590954768260:android:7e06875d95737f6fe09fd1",
+        "mobilesdk_app_id": "1:590954768260:android:0479dff15ac8bc02e09fd1",
         "android_client_info": {
-          "package_name": "com.aut.neuroflex"
+          "package_name": "com.example.spinalfreshstart"
         }
       },
       "oauth_client": [

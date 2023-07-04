@@ -24,6 +24,5 @@ class FirstPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.page1)
     }
-
 }
 
