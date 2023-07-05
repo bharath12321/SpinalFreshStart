@@ -86,7 +86,7 @@
             app:layout_constraintTop_toBottomOf="@id/imageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="420dp" app:layout_constraintHorizontal_bias="0.504"/>
+            android:layout_marginTop="352dp" app:layout_constraintHorizontal_bias="0.498"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
