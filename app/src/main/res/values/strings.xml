@@ -7,4 +7,9 @@
     <string name="enter_your_password">Enter your password</string>
     <string name="todo">TODO</string>
     <string name="sign_in_text">Sign in</string>
+    <string name="register">Register</string>
+    <string name="create_username">Create Username</string>
+    <string name="create_password">Create Password</string>
+    <string name="create_your_username">create your username</string>
+    <string name="create_password_register">Create Password</string>
 </resources>

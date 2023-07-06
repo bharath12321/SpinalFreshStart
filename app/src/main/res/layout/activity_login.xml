@@ -6,7 +6,7 @@
                                                    android:layout_height="match_parent">
 
     <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/neuroflexLogoLogin"
             android:layout_width="406dp"
             android:layout_height="197dp"
             android:src="@drawable/neuroflex_logo"
@@ -19,7 +19,7 @@
             app:layout_constraintVertical_bias="0.029" />
 
     <TextView
-            android:id="@+id/signinText"
+            android:id="@+id/signInTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_in_text"
@@ -28,14 +28,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textStyle="bold"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textColor="@color/black"
             app:layout_constraintHorizontal_bias="0.498" app:layout_constraintVertical_bias="0.384"/>
     <TextView
-            android:id="@+id/usernameTitle"
+            android:id="@+id/EmailTitleLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/username"
+            android:text="Email"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,16 +44,16 @@
             android:textColor="@color/black"
             app:layout_constraintHorizontal_bias="0.156" app:layout_constraintVertical_bias="0.484"/>
     <EditText
-            android:id="@+id/usernameTextBox"
+            android:id="@+id/EmailTextBoxLogin"
             android:layout_width="310dp"
             android:layout_height="48dp"
-            android:hint="@string/enter_your_username"
+            android:hint="Enter your email"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.495" app:layout_constraintVertical_bias="0.551"
-            android:inputType="text"/>
+            android:inputType="textEmailAddress" android:autofillHints="emailAddress"/>
     <TextView
             android:id="@+id/passwordTitle"
             android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
             android:textColor="@color/black"
             app:layout_constraintVertical_bias="0.632" app:layout_constraintHorizontal_bias="0.155"/>
     <EditText
-            android:id="@+id/passwordTextBox"
+            android:id="@+id/passwordTextBoxLogin"
             android:layout_width="310dp"
             android:layout_height="48dp"
             android:hint="@string/enter_your_password"
@@ -78,15 +78,38 @@
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintVertical_bias="0.698"
             android:inputType="textPassword" />
+
+
+    <ProgressBar
+            android:id="@+id/progressBarLogin"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     <Button
-            android:id="@+id/button1"
+            android:id="@+id/signInButton"
             android:text="@string/sign_in"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/neuroflexLogoLogin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="352dp" app:layout_constraintHorizontal_bias="0.498"/>
+            android:layout_marginTop="352dp" app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.144"/>
+
+    <TextView
+            android:id="@+id/goToRegisterPage"
+            android:text="Click to Register"
+            android:textStyle="normal"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="0dp"
+            app:layout_constraintVertical_bias="0.12" app:layout_constraintTop_toBottomOf="@+id/signInButton"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

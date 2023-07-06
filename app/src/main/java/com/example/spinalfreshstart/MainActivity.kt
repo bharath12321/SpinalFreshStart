@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 class FirstPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.page1)
+        setContentView(R.layout.activity_login)
     }
 }
 
