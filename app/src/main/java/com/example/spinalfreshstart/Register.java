@@ -12,15 +12,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.*;
-import org.jetbrains.annotations.NotNull;
 
 public class Register extends AppCompatActivity {
 
     TextInputEditText editTextUsername, editTextPassword;
     Button buttonReg;
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     ProgressBar progressBar;
-    TextView textView;
+    TextView goToLogin;
 
     @Override
     public void onStart() {
@@ -35,7 +34,6 @@ public class Register extends AppCompatActivity {
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance(); 
@@ -43,9 +41,9 @@ public class Register extends AppCompatActivity {
         EditText editTextPassword = findViewById(R.id.passwordTextBox);
         buttonReg = findViewById(R.id.registerButton);
         progressBar = findViewById(R.id.progressBarRegister);
-        textView = findViewById(R.id.goToLogIn);
+        goToLogin = findViewById(R.id.goToLogIn);
 
-        textView.setOnClickListener(new View.OnClickListener() {
+        goToLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -57,7 +55,6 @@ public class Register extends AppCompatActivity {
 
         buttonReg.setOnClickListener(new View.OnClickListener(){
             @Override
-
             public void onClick (View view) {
                 progressBar.setVisibility(View.VISIBLE);
                 String email, password;
@@ -76,7 +73,7 @@ public class Register extends AppCompatActivity {
                 }
 
                 mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
 
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
