@@ -15,11 +15,12 @@
             android:id="@+id/user_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email ID of the user"
+            android:text="@string/email_id_of_the_user"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
     <Button
-            android:text="Logout"
+            android:text="@string/logout"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/Logout"
@@ -29,7 +30,7 @@
             app:layout_constraintHorizontal_bias="0.498" app:layout_constraintVertical_bias="0.017"/>
     <TextView
             android:id="@+id/homePageTitle"
-            android:text="HomePage"
+            android:text="@string/homepage"
             android:textColor="@color/black"
             android:textSize="21sp"
             android:layout_width="wrap_content"
