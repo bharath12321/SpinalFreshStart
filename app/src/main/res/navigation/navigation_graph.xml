@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_graph"
-            app:startDestination="@id/mainActivity">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/navigation_graph"
+            app:startDestination="@id/homePage">
 
-    <activity android:id="@+id/mainActivity" android:name="com.example.spinalfreshstart.MainActivity"
-              android:label="activity_main" tools:layout="@layout/activity_main"/>
+    <fragment
+            android:id="@+id/homePage"
+            android:name="com.example.spinalfreshstart.homePage"
+            android:label="fragment_home_page"
+            tools:layout="@layout/fragment_home_page" />
     <fragment android:id="@+id/threeDModelFragment" android:name="com.example.spinalfreshstart.threeDModelFragment"
               android:label="fragment_three_d_model" tools:layout="@layout/fragment_three_d_model"/>
     <fragment android:id="@+id/profileFragment" android:name="com.example.spinalfreshstart.ProfileFragment"
               android:label="fragment_profile" tools:layout="@layout/fragment_profile"/>
+
 </navigation>

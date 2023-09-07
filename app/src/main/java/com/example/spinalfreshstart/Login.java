@@ -21,7 +21,6 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     Button goToRegister;
 
-
     @Override
     public void onStart() {  // check if user is already signed in
         super.onStart();
