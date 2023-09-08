@@ -20,31 +20,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/navigation_graph" />
 
-    <TextView
-            android:id="@+id/user_details_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email_id_of_the_user"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="21sp"
-            app:layout_constraintBottom_toTopOf="@id/Logout_main"
-            app:layout_constraintTop_toTopOf="@id/nav_host_fragment"
-            app:layout_constraintStart_toStartOf="@id/nav_host_fragment"
-            app:layout_constraintEnd_toEndOf="@id/nav_host_fragment"
-            app:layout_constraintHorizontal_bias="0.506"
-            app:layout_constraintVertical_bias="0.612" />
 
-    <Button
-            android:id="@+id/Logout_main"
-            android:text="Logout"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/nav_host_fragment"
-            app:layout_constraintBottom_toBottomOf="@id/nav_host_fragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/nav_host_fragment" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"

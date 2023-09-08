@@ -32,6 +32,9 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private Button logoutButton;
+
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -59,17 +62,39 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        Button logoutButton = rootView.findViewById(R.id.Logout_profile);
+
+        if(logoutButton != null) {
+            logoutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(getActivity().getApplicationContext(), Login.class);
+                    startActivity(intent);
+
+                    getActivity().finish();
+                }
+            });
+        } else {
+            System.out.println("Logout button not found...");
+        }
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return rootView;
     }
 }

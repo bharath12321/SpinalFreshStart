@@ -12,9 +12,33 @@
     <TextView
             android:layout_width="194dp"
             android:layout_height="48dp"
+            android:textSize="25dp"
+            android:textColor="@color/black"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="140dp"
-            android:text="Profile" />
+            android:text="Profile Page"/>
+
+    <TextView
+            android:id="@+id/user_details_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello User!"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="240dp"
+            android:textSize="21sp"
+             />
+
+    <Button
+            android:id="@+id/Logout_profile"
+            android:text="Logout"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="140dp"
+            android:layout_marginTop="340dp"
+             />
 
 
 </FrameLayout>

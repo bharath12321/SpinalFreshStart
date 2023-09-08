@@ -17,8 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    private Button logoutButton;
-    TextView textView;
+   // TextView textView;
     FirebaseUser user;
     private NavController navController;
 
@@ -27,9 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         auth = FirebaseAuth.getInstance();
-        textView = findViewById(R.id.user_details_main);
+        //textView = findViewById(R.id.user_details_main);
 
-        logoutButton = findViewById(R.id.Logout_main);
         user = auth.getCurrentUser();
 
         if (user == null) {
@@ -37,28 +35,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            textView.setText(user.getEmail());
+            System.out.println("Authentication error");
+           // textView.setText(user.getEmail());
         }
-
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
-
-//        // User wants to log in
-//        Button button = findViewById(R.id.LogIn);
-//        button.setOnClickListener(view -> {
-//            Intent intent = new Intent(this, Login.class);
-//            startActivity(intent);
-//        });
     }
 }

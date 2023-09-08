@@ -7,7 +7,14 @@
         tools:context=".homePage" >
 
     <!-- TODO: Update blank fragment layout -->
-   
 
+    <TextView
+            android:layout_width="194dp"
+            android:layout_height="48dp"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="140dp"
+            android:text="Home Page" />
 
 </FrameLayout>
