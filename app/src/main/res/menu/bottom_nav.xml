@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="3D Model"
+            android:id="@+id/threeDModelFragment"
+            android:icon="@drawable/baseline_3d_model_sensors_24"/>
+    <item android:title="Home"
+            android:id="@+id/homePage"
+            android:icon="@drawable/baseline_home_24"/>
+    <item android:title="Profile"
+            android:id="@+id/profileFragment"
+            android:icon="@drawable/baseline_profile_24"/>
+</menu>

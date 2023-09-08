@@ -56,8 +56,8 @@ dependencies {
         // Other dependencies here
 
         // AndroidX Navigation Component
-        implementation "androidx.navigation:navigation-fragment:$nav_version"
-        implementation "androidx.navigation:navigation-ui:$nav_version"
+        implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+        implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 }
 
 

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-             tools:context=".threeDModelFragment">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".homePage" >
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
             android:layout_width="194dp"
             android:layout_height="48dp"
@@ -14,6 +15,6 @@
             android:textColor="@color/black"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="140dp"
-            android:text="3D Model" />
+            android:text="Home Page" />
 
 </FrameLayout>

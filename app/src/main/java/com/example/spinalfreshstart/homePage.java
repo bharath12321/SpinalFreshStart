@@ -20,7 +20,7 @@ import android.view.ViewGroup;
  * Use the {@link homePage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class homePage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,10 +32,7 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Button logoutButton;
-
-
-    public ProfileFragment() {
+    public homePage() {
         // Required empty public constructor
     }
 
@@ -48,8 +45,8 @@ public class ProfileFragment extends Fragment {
      * @return A new instance of fragment homePage.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
+    public static homePage newInstance(String param1, String param2) {
+        homePage fragment = new homePage();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,39 +59,17 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-
-        Button logoutButton = rootView.findViewById(R.id.Logout_profile);
-
-        if(logoutButton != null) {
-            logoutButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(getActivity().getApplicationContext(), Login.class);
-                    startActivity(intent);
-
-                    getActivity().finish();
-                }
-            });
-        } else {
-            System.out.println("Logout button not found...");
-        }
-
-
         // Inflate the layout for this fragment
-        return rootView;
+        return inflater.inflate(R.layout.fragment_home_page, container, false);
     }
 }

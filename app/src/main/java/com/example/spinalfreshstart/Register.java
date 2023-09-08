@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.*;
 
+import akka.Main;
+
 public class Register extends AppCompatActivity {
 
     TextInputEditText editTextUsername, editTextPassword;
@@ -84,7 +86,6 @@ public class Register extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
 
                                 } else {
-                                    // If sign in fails, display a message to the user.
 
                                     Toast.makeText(Register.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();

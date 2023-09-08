@@ -21,12 +21,11 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     Button goToRegister;
 
-
     @Override
-    public void onStart() {  // check if user is already signed in
+    public void onStart() {
         super.onStart();
          FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){                    //this will check if user is already logged in
+        if(currentUser != null){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
@@ -57,7 +56,7 @@ public class Login extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // progressBar.setVisibility(View.VISIBLE);
+             progressBar.setVisibility(View.VISIBLE);
                 String email, password;
                 email = String.valueOf(editTextEmail.getText());
                 password = String.valueOf(editTextPassword.getText());
