@@ -4,17 +4,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".homePage" >
+        tools:context=".homePage"
+        android:id="@+id/fragment_home_page1">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+            android:id="@+id/neuroflexLogoHomePage"
+            android:layout_width="360dp"
+            android:layout_height="140dp"
+            android:src="@drawable/neuroflex_logo"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/todo"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintVertical_bias="0.608"
+            app:layout_constraintBottom_toTopOf="@+id/signInTitle"/>
+
+
+    <LinearLayout
+            android:layout_width="360dp"
+            android:layout_height="250dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="160dp">
+
+
+
+        <com.jjoe64.graphview.GraphView
+                android:id="@+id/graphModel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+               />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="360dp"
+            android:layout_height="250dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="430dp">
 
     <TextView
-            android:layout_width="194dp"
-            android:layout_height="48dp"
-            android:textSize="25dp"
+            android:layout_height="30dp"
+            android:layout_width="150dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="160dp"
             android:textColor="@color/black"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="140dp"
-            android:text="Home Page" />
+            android:text="Standing Session:"/>
+    <TextView
+            android:id="@+id/textBox2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-</FrameLayout>
+    </LinearLayout>
+
+    </FrameLayout>
+
+
+
+
