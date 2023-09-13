@@ -13,6 +13,7 @@ import com.jjoe64.graphview.series.LineGraphSeries
  * Use the [homePage.newInstance] factory method to
  * create an instance of this fragment.
  */
+
 class homePage : Fragment() {
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
@@ -31,6 +32,8 @@ class homePage : Fragment() {
             mParam2 = requireArguments().getString(ARG_PARAM2)
         }
     }
+
+    //homePage branch
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
