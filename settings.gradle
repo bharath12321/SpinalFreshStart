@@ -5,12 +5,24 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+
+        //shimmmer
+        flatDir {
+            dirs 'libs'
+        }
+
+        jcenter()
+        maven {
+            url 'https://shimmersensing.jfrog.io/artifactory/ShimmerAPI'
+        }
     }
 }
 rootProject.name = "ModelRenderingA4"
-include ':app'
+include ':app', ':ShimmerAndroidInstrumentDriver'
+project(':ShimmerAndroidInstrumentDriver').projectDir = file('ShimmerAndroidInstrumentDriver')

@@ -7,7 +7,7 @@ import android.view.MotionEvent
 import android.view.SurfaceView
 import android.widget.Button
 import android.widget.TextView
-import com.google.android.filament.utils.KTXLoader
+import com.google.android.filament.utils.KTX1Loader
 import com.google.android.filament.utils.ModelViewer
 import com.google.android.filament.utils.Utils
 import java.nio.ByteBuffer
@@ -89,8 +89,8 @@ class ModelActivity : Activity() {
         val bufferSkybox = readAsset("envs/$ibl/${ibl}_skybox.ktx")
         val bufferIndirectLight = readAsset("envs/$ibl/${ibl}_ibl.ktx")
 
-        val skybox = KTXLoader.createSkybox(modelViewer.engine, bufferSkybox)
-        val indirectLight = KTXLoader.createIndirectLight(modelViewer.engine, bufferIndirectLight)
+        val skybox = KTX1Loader.createSkybox(modelViewer.engine, bufferSkybox)
+        val indirectLight = KTX1Loader.createIndirectLight(modelViewer.engine, bufferIndirectLight)
         indirectLight.intensity = 50000f
 
         modelViewer.scene.skybox = skybox
