@@ -1,13 +1,17 @@
 package com.example.spinalfreshstart
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Chronometer
 import androidx.fragment.app.Fragment
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
+
 /**
  * A simple [Fragment] subclass.
  * Use the [homePage.newInstance] factory method to
@@ -20,21 +24,17 @@ class homePage : Fragment() {
     private var mParam1: String? = null
     private var mParam2: String? = null
     lateinit var lineGraphView: GraphView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
        // lineGraphView.findViewById<GraphView>(R.id.graphModel)
-
-
 
         if (arguments != null) {
             mParam1 = requireArguments().getString(ARG_PARAM1)
             mParam2 = requireArguments().getString(ARG_PARAM2)
         }
     }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +44,32 @@ class homePage : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home_page, container, false)
 
         lineGraphView = view.findViewById(R.id.graphModel)
+
+        val timerOne = view.findViewById<Chronometer>(R.id.chronometerOne)
+        val timerTwo = view.findViewById<Chronometer>(R.id.chronometerTwo)
+
+        val startTimerOne = view.findViewById<Button>(R.id.startbuttonTimerOne)
+        val stopTimerOne = view.findViewById<Button>(R.id.stopbuttonTimerOne)
+        val startTimerTwo = view.findViewById<Button>(R.id.startbuttonTimerTwo)
+        val stopTimerTwo = view.findViewById<Button>(R.id.stopbuttonTimerTwo)
+
+
+        startTimerOne.setOnClickListener {
+                  timerOne.base = SystemClock.elapsedRealtime()
+                  timerOne.start()
+        }
+        stopTimerOne.setOnClickListener {
+                timerOne.stop()
+        }
+        startTimerTwo.setOnClickListener {
+            timerTwo.base = SystemClock.elapsedRealtime()
+            timerTwo.start()
+        }
+        stopTimerTwo.setOnClickListener {
+            timerTwo.stop()
+        }
+
+
 
         val series1: LineGraphSeries<DataPoint> = LineGraphSeries(
             arrayOf(

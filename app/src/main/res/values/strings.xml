@@ -18,4 +18,5 @@
     <string name="homepage">HomePage</string>
     <string name="logout">Logout</string>
     <string name="email_id_of_the_user">Email ID of the user</string>
+    <string name="startButton">Start</string>
 </resources>
