@@ -5,7 +5,6 @@ import android.opengl.Matrix
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.Choreographer
 import android.view.SurfaceView
 import android.widget.Button
@@ -15,7 +14,10 @@ import com.google.android.filament.utils.ModelViewer
 import com.google.android.filament.utils.Utils
 import java.nio.ByteBuffer
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
+
+import kotlin.math.max
+import kotlin.math.min
+
 
 class ModelActivity : Activity() {
 
@@ -29,10 +31,42 @@ class ModelActivity : Activity() {
     private lateinit var choreographer: Choreographer
     private lateinit var modelViewer: ModelViewer
 
-    //for camera
-    private var previousX = 0f
-    private var previousY = 0f
-    private var oldDistance = 0f
+    // Constants for controlling animation speed
+    private val animationSpeed = 1.0 // Adjust this value to control animation speed
+
+    // Define your animation parameters (sampleAngles and sampleAngularVelocities) here
+    val sampleAngles = arrayOf(
+        10.3f, 9.7f, 9.0f, 8.3f, 7.6f, 7.0f, 6.4f, 5.9f, 5.6f, 5.1f,
+        4.4f, 3.6f, 2.9f, 2.4f, 2.2f, 2.1f, 2.0f, 1.9f, 2.2f, 3.0f,
+        4.4f, 5.8f, 7.1f, 8.3f, 9.4f, 10.3f, 0.0f, 15.3f, 16.3f, 17.0f,
+        17.5f, 18.5f, 19.1f, 20.3f, 21.4f, 22.4f, 23.6f, 24.7f, 26.1f,
+        27.4f, 28.8f, 30.1f, 31.5f, 33.1f, 34.5f, 35.7f, 37.1f, 38.4f,
+        39.8f, 41.2f, 42.8f, 44.4f, 45.9f, 47.4f, 48.8f, 50.3f, 51.9f,
+        53.4f, 54.6f, 55.8f, 56.8f, 57.8f, 58.7f, 59.5f, 60.2f, 60.8f,
+        61.2f, 61.7f, 62.0f, 62.2f, 62.5f, 62.9f, 63.0f, 62.8f, 62.6f,
+        62.3f, 61.9f, 61.3f, 60.4f, 59.1f, 57.6f, 55.5f, 53.5f, 51.4f,
+        49.0f, 46.6f, 44.0f, 41.4f, 38.8f, 36.3f, 34.0f, 32.0f, 29.9f,
+        27.9f, 26.0f, 24.1f, 22.1f, 19.9f, 17.7f, 15.5f, 13.3f, 10.9f,
+        8.7f, 6.4f, 4.4f, 2.5f, 1.3f, 2.0f, 3.8f, 5.5f, 7.2f, 8.8f,
+        10.5f, 12.1f, 13.8f, 15.2f, 16.4f, 17.3f, 18.0f, 18.4f, 18.3f,
+        18.4f, 18.4f, 18.5f, 18.5f, 18.5f
+    )
+
+    val sampleAngularVelocities = arrayOf(
+        0.0f, 14.3f, 14.8f, 13.5f, 11.7f, 10.4f, 8.3f, 8.9f, 12.2f, 15.8f,
+        17.5f, 16.6f, 14.0f, 8.5f, 3.9f, 9.8f, 19.1f, 23.2f, 28.1f, 30.4f,
+        28.3f, 26.7f, 24.5f, 20.7f, 136.7f, 7.2f, 163.2f, 16.9f, 12.3f, 15.2f,
+        16.2f, 17.8f, 22.3f, 21.8f, 22.2f, 23.4f, 25.5f, 26.7f, 27.8f, 27.7f,
+        27.8f, 30.6f, 30.3f, 26.5f, 26.1f, 27.5f, 28.1f, 29.6f, 31.1f, 31.5f,
+        30.7f, 30.4f, 29.6f, 29.3f, 31.4f, 31.0f, 27.0f, 24.7f, 22.2f, 20.2f,
+        18.5f, 16.6f, 15.8f, 13.1f, 10.3f, 8.8f, 7.8f, 5.6f, 5.4f, 7.2f,
+        4.8f, 1.9f, 4.6f, 4.8f, 6.7f, 9.9f, 15.3f, 22.2f, 28.4f, 36.5f,
+        41.1f, 40.8f, 45.0f, 49.0f, 50.4f, 52.0f, 51.9f, 51.1f, 48.6f, 43.9f,
+        41.6f, 41.1f, 39.1f, 38.5f, 39.4f, 41.7f, 44.0f, 44.5f, 44.6f, 45.7f,
+        46.5f, 45.7f, 43.7f, 41.7f, 39.8f, 39.8f, 41.0f, 38.0f, 34.3f, 33.1f,
+        33.0f, 33.0f, 33.7f, 31.1f, 26.4f, 21.3f, 16.2f, 11.0f, 3.4f, 1.1f,
+        0.9f, 1.0f, 1.4f, 0.7f, 1.7f, 2.6f
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +77,6 @@ class ModelActivity : Activity() {
         val backButton = findViewById<Button>(R.id.backButton)
 
         backButton.setOnClickListener {
-            // Finish the current activity and go back to the previous activity (MenuActivity)
             finish()
         }
 
@@ -51,209 +84,56 @@ class ModelActivity : Activity() {
         modelViewer = ModelViewer(surfaceView)
         surfaceView.setOnTouchListener(modelViewer)
 
-        // Load the model, skybox, and indirect light
         loadModelAndEnvironment("human", "venetian_crossroads_2k")
-
     }
 
-    data class CustomQuaternion(val x: Double, val y: Double, val z: Double, val w: Double)
     private val executor = Executors.newSingleThreadExecutor()
 
     private val frameCallback = object : Choreographer.FrameCallback {
-        private val startTime = System.nanoTime()
-        private var frameIndex = 0
+        private var startTime = System.nanoTime()
         private val handler = Handler(Looper.getMainLooper())
-        private val frameDelayMillis = 1000 // Delay in milliseconds (adjust as needed)
-
-
-        // Sample custom quaternion data (replace this with your array of custom quaternions)
-        private val sampleQuaternions = arrayOf(
-            CustomQuaternion(0.992742288, -0.090424207, 0.065724703, -0.044344961),
-            CustomQuaternion(0.992565406, -0.081224479, 0.076890119, -0.048004263),
-            CustomQuaternion(0.992295754, -0.067957596, 0.087414215, -0.055584677),
-            CustomQuaternion(0.991707247, -0.053559484, 0.097668562, -0.064101248),
-            CustomQuaternion(0.990511305, -0.035485333, 0.110962221, -0.072907685),
-            CustomQuaternion(0.985822128, -0.015337189, 0.137674497, -0.094684931),
-            CustomQuaternion(0.98273102, 0.002082606, 0.15111206, -0.10677336),
-            CustomQuaternion(0.982900616, 0.022735224, 0.148414793, -0.106595204),
-            CustomQuaternion(0.979459008, 0.037371687, 0.158875277, -0.118414761),
-            CustomQuaternion(0.971703296, 0.037563098, 0.189460636, -0.135964652),
-            CustomQuaternion(0.971557646, 0.057530371, 0.183449586, -0.138247044),
-            CustomQuaternion(0.962870024, 0.056631909, 0.211046773, -0.158535183),
-            CustomQuaternion(0.957061899, 0.069416469, 0.220565512, -0.174827717),
-            CustomQuaternion(0.955353262, 0.087785494, 0.216419764, -0.180987122),
-            CustomQuaternion(0.949089216, 0.097442257, 0.226621482, -0.195901433),
-            CustomQuaternion(0.942385559, 0.107791227, 0.235416299, -0.211824633),
-            CustomQuaternion(0.936330002, 0.116207136, 0.242773793, -0.225483735),
-            CustomQuaternion(0.935039062, 0.131886152, 0.238063309, -0.227230844),
-            CustomQuaternion(0.930414645, 0.13671143, 0.242916587, -0.237970805),
-            CustomQuaternion(0.930295285, 0.146903654, 0.237310621, -0.23802031),
-            CustomQuaternion(0.919773759, 0.108752022, 0.270546418, -0.262666832)
-            // Add more custom quaternions as needed
-        )
 
         override fun doFrame(currentTime: Long) {
             choreographer.postFrameCallback(this)
 
             executor.execute {
-                // ... (rest of your code inside doFrame)
                 try {
-                    TimeUnit.MILLISECONDS.sleep(frameDelayMillis.toLong())
+                    var elapsedTime = (currentTime - startTime).toDouble() / 1_000_000_000
 
-                    // Perform bone transformation and updates on the main thread
                     handler.post {
                         modelViewer.render(currentTime)
-                        // ... (rest of your code inside doFrame)
 
-                        val seconds = (currentTime - startTime).toDouble() / 1_000_000_000
-                        choreographer.postFrameCallback(this)
+                        // Use sampleAngles and sampleAngularVelocities to control the animation
+                        val sampleIndex = (elapsedTime * animationSpeed) % sampleAngles.size
 
-                        Executors.newSingleThreadExecutor().execute {
-                            try {
-                                TimeUnit.MILLISECONDS.sleep(frameDelayMillis.toLong())
-
-                                // Perform bone transformation and updates on the main thread
-                                handler.post {
-                                    // Selects the relevant bone
-                                    modelViewer.asset?.getFirstEntityByName("spine01")?.let { entity ->
-                                        // Gets the bone's current transformation matrix
-                                        val currentMatrix = FloatArray(16)
-                                        entity.getTransform().copyInto(currentMatrix)
-
-
-                                        val eulerAngles = calculateEulerAngles(sampleQuaternions)
-                                        val angleTheta = eulerAngles.second // θ
-
-                                        // Check if θ is over 80 degrees
-                                        if (Math.toDegrees(angleTheta.toDouble()) > 80) {
-                                            // Display a notification
-                                            Log.d("Animation", "Model at an angle over 80 degrees-==-=-=-=-=-=-")
-//                    Toast.makeText(
-//                        this,
-//                        "Model at an angle over 80 degrees",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-
-                                            // You can replace Log.d with a notification display mechanism of your choice
-                                        }
-
-                                        // Get the current sample custom quaternion
-                                        val currentSampleQuaternion = sampleQuaternions[frameIndex % sampleQuaternions.size]
-
-                                        // Increment the frame index to move to the next sample custom quaternion
-                                        frameIndex++
-
-                                        // Reset the frame index if it exceeds the number of samples
-                                        if (frameIndex >= sampleQuaternions.size) {
-                                            frameIndex = 0
-                                        }
-
-                                        // Create a rotation matrix from the custom quaternion
-                                        val quaternion = currentSampleQuaternion
-                                        val rotationMatrix = FloatArray(16)
-
-                                        val x = quaternion.x.toFloat()
-                                        val y = quaternion.y.toFloat()
-                                        val z = quaternion.z.toFloat()
-                                        val w = quaternion.w.toFloat()
-
-                                        val xx = x * x
-                                        val xy = x * y
-                                        val xz = x * z
-                                        val xw = x * w
-
-                                        val yy = y * y
-                                        val yz = y * z
-                                        val yw = y * w
-
-                                        val zz = z * z
-                                        val zw = z * w
-
-                                        rotationMatrix[0] = 1.0f - 2.0f * (yy + zz)
-                                        rotationMatrix[1] = 2.0f * (xy - zw)
-                                        rotationMatrix[2] = 2.0f * (xz + yw)
-                                        rotationMatrix[3] = 0.0f
-
-                                        rotationMatrix[4] = 2.0f * (xy + zw)
-                                        rotationMatrix[5] = 1.0f - 2.0f * (xx + zz)
-                                        rotationMatrix[6] = 2.0f * (yz - xw)
-                                        rotationMatrix[7] = 0.0f
-
-                                        rotationMatrix[8] = 2.0f * (xz - yw)
-                                        rotationMatrix[9] = 2.0f * (yz + xw)
-                                        rotationMatrix[10] = 1.0f - 2.0f * (xx + yy)
-                                        rotationMatrix[11] = 0.0f
-
-                                        rotationMatrix[12] = 0.0f
-                                        rotationMatrix[13] = 0.0f
-                                        rotationMatrix[14] = 0.0f
-                                        rotationMatrix[15] = 1.0f
-
-                                        // Apply the rotation matrix to the current transformation
-                                        val tempMatrix = FloatArray(16)
-                                        Matrix.multiplyMM(tempMatrix, 0, currentMatrix, 0, rotationMatrix, 0)
-                                        tempMatrix.copyInto(currentMatrix)
-                                        entity.setTransform(currentMatrix)
-                                    }
-
-                                    // Update the rest of the model bones that are dependent on the transformed bone
-                                    modelViewer.animator?.updateBoneMatrices()
-
-                                    // Render again after updates
-                                    modelViewer.render(currentTime)
-                                }
-                            } catch (e: InterruptedException) {
-                                e.printStackTrace()
-                            }
+                        // Reset startTime if we've reached the end of the animation
+                        if (sampleIndex < 1) {
+                            startTime = currentTime
+                            elapsedTime = 0.0
                         }
+
+                        val currentSampleAngle = sampleAngles[sampleIndex.toInt()]
+                        val currentSampleAngularVelocity = sampleAngularVelocities[sampleIndex.toInt()]
+
+                        val currentMatrix = FloatArray(16)
+                        modelViewer.asset?.getFirstEntityByName("spine01")?.getTransform()?.copyInto(currentMatrix)
+
+                        val rotationMatrix = FloatArray(16)
+                        Matrix.setRotateM(rotationMatrix, 0, currentSampleAngle, 1f, 0f, 0f)
+
+                        val tempMatrix = FloatArray(16)
+                        Matrix.multiplyMM(tempMatrix, 0, currentMatrix, 0, rotationMatrix, 0)
+                        tempMatrix.copyInto(currentMatrix)
+                        modelViewer.asset?.getFirstEntityByName("spine01")?.setTransform(currentMatrix)
+
+                        modelViewer.animator?.updateBoneMatrices()
+                        modelViewer.render(currentTime)
                     }
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
             }
         }
-
-    }
-
-    // Function to calculate Euler angles from a quaternion
-    private fun calculateEulerAngles(quaternionArray: Array<CustomQuaternion>): Triple<Double, Double, Double> {
-        // Calculate the average quaternion from the array
-        val averageQuaternion = calculateAverageQuaternion(quaternionArray)
-
-        val q0 = averageQuaternion.w
-        val q1 = averageQuaternion.x
-        val q2 = averageQuaternion.y
-        val q3 = averageQuaternion.z
-
-        val phi = Math.atan2(2 * (q0 * q1 + q2 * q3), 1 - 2 * (q1 * q1 + q2 * q2)) // ϕ
-        val theta = Math.asin(2 * (q0 * q2 - q3 * q1)) // θ
-        val psi = Math.atan2(2 * (q0 * q3 + q1 * q2), 1 - 2 * (q2 * q2 + q3 * q3)) // ψ
-
-        return Triple(phi, theta, psi)
-    }
-
-    private fun calculateAverageQuaternion(quaternionArray: Array<CustomQuaternion>): CustomQuaternion {
-        // Initialize the sum of quaternions components
-        var sumW = 0.0
-        var sumX = 0.0
-        var sumY = 0.0
-        var sumZ = 0.0
-
-        // Sum up the components of all quaternions in the array
-        for (quaternion in quaternionArray) {
-            sumW += quaternion.w
-            sumX += quaternion.x
-            sumY += quaternion.y
-            sumZ += quaternion.z
-        }
-
-        // Calculate the average components
-        val averageW = sumW / quaternionArray.size
-        val averageX = sumX / quaternionArray.size
-        val averageY = sumY / quaternionArray.size
-        val averageZ = sumZ / quaternionArray.size
-
-        return CustomQuaternion(averageX, averageY, averageZ, averageW)
     }
 
     private fun Int.setTransform(mat: FloatArray) {
@@ -261,20 +141,12 @@ class ModelActivity : Activity() {
         tm.setTransform(tm.getInstance(this), mat)
     }
 
-//    private fun Int.getTransform(): Mat4 {
-//        val tm = modelViewer.engine.transformManager
-//        val arr = FloatArray(16)
-//        tm.getTransform(tm.getInstance(this), arr)
-//        return Mat4.of(*arr)
-//    }
-
     private fun Int.getTransform(): FloatArray {
         val tm = modelViewer.engine.transformManager
         val arr = FloatArray(16)
         tm.getTransform(tm.getInstance(this), arr)
         return arr
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -307,7 +179,6 @@ class ModelActivity : Activity() {
         modelViewer.loadModelGltf(buffer) { uri -> readAsset("$uri") }
         modelViewer.transformToUnitCube()
     }
-
 
     private fun loadSkyboxAndIndirectLight(ibl: String) {
         val bufferSkybox = readAsset("envs/$ibl/${ibl}_skybox.ktx")
