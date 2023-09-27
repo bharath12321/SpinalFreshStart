@@ -15,10 +15,6 @@ import com.google.android.filament.utils.Utils
 import java.nio.ByteBuffer
 import java.util.concurrent.Executors
 
-import kotlin.math.max
-import kotlin.math.min
-
-
 class ModelActivity : Activity() {
 
     companion object {
@@ -32,7 +28,7 @@ class ModelActivity : Activity() {
     private lateinit var modelViewer: ModelViewer
 
     // Constants for controlling animation speed
-    private val animationSpeed = 1.0 // Adjust this value to control animation speed
+    private val animationSpeed = 20.0 // Adjust this value to control animation speed
 
     // Define your animation parameters (sampleAngles and sampleAngularVelocities) here
     val sampleAngles = arrayOf(
@@ -84,7 +80,7 @@ class ModelActivity : Activity() {
         modelViewer = ModelViewer(surfaceView)
         surfaceView.setOnTouchListener(modelViewer)
 
-        loadModelAndEnvironment("human", "venetian_crossroads_2k")
+        loadModelAndEnvironment("scene", "venetian_crossroads_2k")
     }
 
     private val executor = Executors.newSingleThreadExecutor()
@@ -115,16 +111,11 @@ class ModelActivity : Activity() {
                         val currentSampleAngle = sampleAngles[sampleIndex.toInt()]
                         val currentSampleAngularVelocity = sampleAngularVelocities[sampleIndex.toInt()]
 
-                        val currentMatrix = FloatArray(16)
-                        modelViewer.asset?.getFirstEntityByName("spine01")?.getTransform()?.copyInto(currentMatrix)
-
                         val rotationMatrix = FloatArray(16)
-                        Matrix.setRotateM(rotationMatrix, 0, currentSampleAngle, 1f, 0f, 0f)
+                        Matrix.setRotateM(rotationMatrix, 0, currentSampleAngle, 1f, 0f, 0f) // Rotate around the X axis
 
-                        val tempMatrix = FloatArray(16)
-                        Matrix.multiplyMM(tempMatrix, 0, currentMatrix, 0, rotationMatrix, 0)
-                        tempMatrix.copyInto(currentMatrix)
-                        modelViewer.asset?.getFirstEntityByName("spine01")?.setTransform(currentMatrix)
+                        // Only apply rotation matrix to spine01 entity
+                        modelViewer.asset?.getFirstEntityByName("Spine_53")?.setTransform(rotationMatrix)
 
                         modelViewer.animator?.updateBoneMatrices()
                         modelViewer.render(currentTime)
