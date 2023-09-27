@@ -114,7 +114,7 @@ class ModelActivity : Activity() {
                         val rotationMatrix = FloatArray(16)
                         Matrix.setRotateM(rotationMatrix, 0, currentSampleAngle, 1f, 0f, 0f) // Rotate around the X axis
 
-                        // Only apply rotation matrix to spine01 entity
+                        // Only apply rotation matrix to Spine_53 entity
                         modelViewer.asset?.getFirstEntityByName("Spine_53")?.setTransform(rotationMatrix)
 
                         modelViewer.animator?.updateBoneMatrices()
@@ -177,7 +177,7 @@ class ModelActivity : Activity() {
 
         val skybox = KTX1Loader.createSkybox(modelViewer.engine, bufferSkybox)
         val indirectLight = KTX1Loader.createIndirectLight(modelViewer.engine, bufferIndirectLight)
-        indirectLight.intensity = 50000f
+        indirectLight.intensity = 15000f
 
         modelViewer.scene.skybox = skybox
         modelViewer.scene.indirectLight = indirectLight
