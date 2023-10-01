@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/navigation_graph"
+            app:startDestination="@id/homePage">
+
+    <fragment
+            android:id="@+id/homePage"
+            android:name="com.example.spinalfreshstart.homePage"
+            android:label="fragment_home_page"
+            tools:layout="@layout/fragment_home_page" />
+    <activity android:id="@+id/threeDModelFragment" android:name="com.example.spinalfreshstart.ModelActivity"
+              android:label="fragment_three_d_model" tools:layout="@layout/fragment_model"/>
+    <fragment android:id="@+id/profileFragment" android:name="com.example.spinalfreshstart.ProfileFragment"
+              android:label="fragment_profile" tools:layout="@layout/fragment_profile"/>
+
+</navigation>

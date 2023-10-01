@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">SpinalFreshStart</string>
+    <string name="sign_in">Sign In</string>
+    <string name="username">Username</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="password">Password</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="todo">TODO</string>
+    <string name="sign_in_text">Sign in</string>
+    <string name="register">Register</string>
+    <string name="create_username">Create Username</string>
+    <string name="create_password">Create Password</string>
+    <string name="create_your_username">create your username</string>
+    <string name="create_password_register">Create Password</string>
+    <string name="logout_button">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="homepage">HomePage</string>
+    <string name="logout">Logout</string>
+    <string name="email_id_of_the_user">Email ID of the user</string>
+    <string name="startButton">Start</string>
+</resources>
