@@ -39,7 +39,8 @@ android {
 
 dependencies {
     implementation 'com.google.firebase:firebase-auth:22.0.0' // This line may change based on the Firebase version you're using
-    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation (platform("com.google.firebase:firebase-bom:32.1.1"))
+    implementation ("com.google.firebase:firebase-database-ktx")
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -67,3 +68,4 @@ dependencies {
     // Graph in Kotlin
     implementation 'com.jjoe64:graphview:4.2.2'
 }
+

@@ -1,5 +1,4 @@
 package com.example.spinalfreshstart
-
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +8,7 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+
 
 class MainActivity : AppCompatActivity() {
     private var auth: FirebaseAuth? = null
@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
+
         //textView = findViewById(R.id.user_details_main);
         user = auth!!.currentUser
         if (user == null) {

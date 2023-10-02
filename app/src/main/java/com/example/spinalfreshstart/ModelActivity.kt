@@ -11,8 +11,16 @@ import android.widget.Button
 import android.widget.TextView
 import com.google.android.filament.utils.KTX1Loader
 import com.google.android.filament.utils.ModelViewer
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.initialize
 import java.nio.ByteBuffer
 import java.util.concurrent.Executors
+import com.google.firebase.FirebaseApp
+import com.google.firebase.database.DatabaseError
+
 
 class ModelActivity : Activity() {
 
@@ -70,6 +78,8 @@ class ModelActivity : Activity() {
         findViewById<TextView>(R.id.titleTextView)
         surfaceView = findViewById(R.id.modelSurfaceView)
         val backButton = findViewById<Button>(R.id.backButton)
+        FirebaseApp.initializeApp(this)
+        connectFirebase()
 
         backButton.setOnClickListener {
             finish()
@@ -80,7 +90,18 @@ class ModelActivity : Activity() {
         surfaceView.setOnTouchListener(modelViewer)
 
         loadModelAndEnvironment("scene", "venetian_crossroads_2k")
+
+
     }
+
+    private fun connectFirebase() {
+        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+        val myRef: DatabaseReference = database.getReference("bendAngleData")
+        myRef.setValue("Hello!")
+        println("Connected with Firebase...")
+    }
+
+
 
     private val executor = Executors.newSingleThreadExecutor()
 
@@ -188,4 +209,11 @@ class ModelActivity : Activity() {
         input.read(bytes)
         return ByteBuffer.wrap(bytes)
     }
+
+    private val database = Firebase.database
+    val myRef = database.getReference("message")
+
+
+
+
 }
