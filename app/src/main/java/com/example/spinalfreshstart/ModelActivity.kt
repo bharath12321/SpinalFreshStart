@@ -20,6 +20,8 @@ import java.nio.ByteBuffer
 import java.util.concurrent.Executors
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DatabaseError
+import java.util.Timer
+import java.util.TimerTask
 
 
 class ModelActivity : Activity() {
@@ -91,14 +93,32 @@ class ModelActivity : Activity() {
 
         loadModelAndEnvironment("scene", "venetian_crossroads_2k")
 
+        Thread {
+            connectFirebase()
+        }.start()
+
 
     }
 
     private fun connectFirebase() {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("bendAngleData")
-        myRef.setValue("Hello!")
+       //myRef.setValue("Hello!")
         println("Connected with Firebase...")
+
+        val timer = Timer()
+        var counter = 0
+
+        timer.schedule(object: TimerTask(){
+            override fun run() {
+                if(counter < sampleAngles.size) {
+                    myRef.setValue(sampleAngles[counter])
+                    counter++
+                } else {
+                    timer.cancel()
+                }
+            }
+        }, 0, 100)
     }
 
 
@@ -210,8 +230,8 @@ class ModelActivity : Activity() {
         return ByteBuffer.wrap(bytes)
     }
 
-    private val database = Firebase.database
-    val myRef = database.getReference("message")
+//    private val database = Firebase.database
+//    val myRef = database.getReference("message")
 
 
 
