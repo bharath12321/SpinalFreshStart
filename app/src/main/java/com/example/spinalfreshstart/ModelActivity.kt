@@ -163,7 +163,7 @@ class ModelActivity : Activity() {
 
     private fun connectFirebase() {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-        val myRef: DatabaseReference = database.getReference("bendAngleData")
+        val myRef: DatabaseReference = database.getReference("bendAngle")
         println("Connected with Firebase...")
 
         var counter = 0
@@ -171,7 +171,7 @@ class ModelActivity : Activity() {
         firebaseTimer?.schedule(object: TimerTask(){
             override fun run() {
                 if(counter < sampleAngles.size && isSessionActive == true) {
-                    myRef.setValue(sampleAngles[counter])
+                    myRef.setValue(sampleAngles[counter].toDouble())
                     counter++
                 } else {
                     counter = 0
