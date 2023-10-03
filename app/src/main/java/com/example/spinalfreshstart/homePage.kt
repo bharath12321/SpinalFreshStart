@@ -198,6 +198,21 @@ class homePage : Fragment() {
             )
         )
 
+        val max = series1.highestValueY;
+        val min = series1.lowestValueY;
+        val harmfulAngle = (max-min)*(0.8)+min;
+
+        fun drawStraightLineFromYAxisValue(graphView: GraphView, angle: Float) {
+            val lineGraphSeries = LineGraphSeries<DataPoint>()
+            val harmfulAngleDouble = angle.toDouble()
+            val startPoint = DataPoint(series1.lowestValueX,  harmfulAngleDouble)
+            val endPoint = DataPoint(series1.highestValueX,  harmfulAngleDouble)
+            lineGraphSeries.appendData(startPoint, true, 2)
+            lineGraphSeries.appendData(endPoint, true, 2)
+            graphView.addSeries(lineGraphSeries)
+        }
+
+        drawStraightLineFromYAxisValue(lineGraphView, harmfulAngle.toFloat())
 
         lineGraphView.animate()
         lineGraphView.viewport.isScrollable = true
