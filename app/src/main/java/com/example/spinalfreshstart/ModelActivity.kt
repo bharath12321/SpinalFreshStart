@@ -22,6 +22,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DatabaseError
 import java.util.Timer
 import java.util.TimerTask
+import java.util.concurrent.TimeUnit
 
 
 class ModelActivity : Activity() {
@@ -35,6 +36,10 @@ class ModelActivity : Activity() {
     private lateinit var surfaceView: SurfaceView
     private lateinit var choreographer: Choreographer
     private lateinit var modelViewer: ModelViewer
+
+
+    private var isSessionActive = false
+    private var sessionElapsedTime: Long = 0
 
     // Constants for controlling animation speed
     private val animationSpeed = 20.0 // Adjust this value to control animation speed
@@ -79,7 +84,12 @@ class ModelActivity : Activity() {
 
         findViewById<TextView>(R.id.titleTextView)
         surfaceView = findViewById(R.id.modelSurfaceView)
+
         val backButton = findViewById<Button>(R.id.backButton)
+        val startSessionButton = findViewById<Button>(R.id.startSessionButton)
+        val endSessionButton = findViewById<Button>(R.id.endSessionButton)
+        val sessionTimer = findViewById<TextView>(R.id.sessionStatusTextView)
+
         FirebaseApp.initializeApp(this)
         connectFirebase()
 
@@ -93,17 +103,42 @@ class ModelActivity : Activity() {
 
         loadModelAndEnvironment("scene", "venetian_crossroads_2k")
 
-        Thread {
-            connectFirebase()
-        }.start()
+        startSessionButton.setOnClickListener {
 
+            isSessionActive = true
+            sessionElapsedTime = 0
+            sessionTimer.setTextColor(getColor(android.R.color.holo_green_light))
+            sessionTimer.text = "Current Session: 00:00"
+
+            connectFirebase()
+
+            val sessionHandler = Handler(Looper.getMainLooper())
+            sessionHandler.post(object : Runnable {
+                override fun run() {
+                    if(isSessionActive == true) {
+                        sessionElapsedTime++
+
+                        val minutes = TimeUnit.SECONDS.toMinutes(sessionElapsedTime)
+                        val seconds = TimeUnit.SECONDS.toSeconds(sessionElapsedTime) - TimeUnit.MINUTES.toSeconds(minutes)
+
+                        sessionTimer.text = String.format("Current Session: %02d:%02d", minutes, seconds)
+
+                        sessionHandler.postDelayed(this, 1000)
+                    }
+                }
+            })
+        }
+
+        endSessionButton.setOnClickListener {
+            isSessionActive = false
+            sessionTimer.setTextColor(getColor(android.R.color.holo_red_light))
+        }
 
     }
 
     private fun connectFirebase() {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("bendAngleData")
-       //myRef.setValue("Hello!")
         println("Connected with Firebase...")
 
         val timer = Timer()
@@ -111,7 +146,7 @@ class ModelActivity : Activity() {
 
         timer.schedule(object: TimerTask(){
             override fun run() {
-                if(counter < sampleAngles.size) {
+                if(counter < sampleAngles.size && isSessionActive == true) {
                     myRef.setValue(sampleAngles[counter])
                     counter++
                 } else {
@@ -229,11 +264,5 @@ class ModelActivity : Activity() {
         input.read(bytes)
         return ByteBuffer.wrap(bytes)
     }
-
-//    private val database = Firebase.database
-//    val myRef = database.getReference("message")
-
-
-
 
 }
