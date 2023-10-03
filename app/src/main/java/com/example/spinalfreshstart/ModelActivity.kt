@@ -5,10 +5,12 @@ import android.opengl.Matrix
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Choreographer
 import android.view.SurfaceView
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.filament.utils.KTX1Loader
 import com.google.android.filament.utils.ModelViewer
 import com.google.firebase.database.ktx.database
@@ -39,7 +41,10 @@ class ModelActivity : Activity() {
 
 
     private var isSessionActive = false
+    private var isAnimationRunning = false
     private var sessionElapsedTime: Long = 0
+
+    private var firebaseTimer: Timer? = null
 
     // Constants for controlling animation speed
     private val animationSpeed = 20.0 // Adjust this value to control animation speed
@@ -104,34 +109,54 @@ class ModelActivity : Activity() {
         loadModelAndEnvironment("scene", "venetian_crossroads_2k")
 
         startSessionButton.setOnClickListener {
+            isAnimationRunning = true //Start animation
+            if (isSessionActive == true) {
+                Toast.makeText(this, "Session is currently active", Toast.LENGTH_SHORT).show()
+                Log.d("MyApp", "Session is already active")
 
-            isSessionActive = true
-            sessionElapsedTime = 0
-            sessionTimer.setTextColor(getColor(android.R.color.holo_green_light))
-            sessionTimer.text = "Current Session: 00:00"
+            } else
+            {
+                isSessionActive = true
+                sessionElapsedTime = 0
+                sessionTimer.setTextColor(getColor(android.R.color.holo_green_light))
+                sessionTimer.text = "Current Session: 00:00"
 
-            connectFirebase()
+                connectFirebase()
 
-            val sessionHandler = Handler(Looper.getMainLooper())
-            sessionHandler.post(object : Runnable {
-                override fun run() {
-                    if(isSessionActive == true) {
-                        sessionElapsedTime++
+                val sessionHandler = Handler(Looper.getMainLooper())
+                sessionHandler.post(object : Runnable {
+                    override fun run() {
+                        if(isSessionActive == true) {
+                            sessionElapsedTime++
 
-                        val minutes = TimeUnit.SECONDS.toMinutes(sessionElapsedTime)
-                        val seconds = TimeUnit.SECONDS.toSeconds(sessionElapsedTime) - TimeUnit.MINUTES.toSeconds(minutes)
+                            val minutes = TimeUnit.SECONDS.toMinutes(sessionElapsedTime)
+                            val seconds = TimeUnit.SECONDS.toSeconds(sessionElapsedTime) - TimeUnit.MINUTES.toSeconds(minutes)
 
-                        sessionTimer.text = String.format("Current Session: %02d:%02d", minutes, seconds)
+                            sessionTimer.text = String.format("Current Session: %02d:%02d", minutes, seconds)
 
-                        sessionHandler.postDelayed(this, 1000)
+                            sessionHandler.postDelayed(this, 1000)
+                        }
                     }
-                }
-            })
+                })
+            }
         }
 
         endSessionButton.setOnClickListener {
-            isSessionActive = false
-            sessionTimer.setTextColor(getColor(android.R.color.holo_red_light))
+            if(isSessionActive == false) {
+                Toast.makeText(this, "No active sessions", Toast.LENGTH_SHORT).show()
+                Log.d("MyApp", "No active sessions")
+
+            } else {
+
+                isSessionActive = false
+                isAnimationRunning = false
+                sessionTimer.setTextColor(getColor(android.R.color.holo_red_light))
+
+                //Cancel timer to stop sending data to firebase
+                firebaseTimer?.cancel()
+                firebaseTimer = null
+            }
+
         }
 
     }
@@ -141,16 +166,15 @@ class ModelActivity : Activity() {
         val myRef: DatabaseReference = database.getReference("bendAngleData")
         println("Connected with Firebase...")
 
-        val timer = Timer()
         var counter = 0
-
-        timer.schedule(object: TimerTask(){
+        firebaseTimer = Timer()
+        firebaseTimer?.schedule(object: TimerTask(){
             override fun run() {
                 if(counter < sampleAngles.size && isSessionActive == true) {
                     myRef.setValue(sampleAngles[counter])
                     counter++
                 } else {
-                    timer.cancel()
+                    counter = 0
                 }
             }
         }, 0, 100)
@@ -167,38 +191,42 @@ class ModelActivity : Activity() {
         override fun doFrame(currentTime: Long) {
             choreographer.postFrameCallback(this)
 
-            executor.execute {
-                try {
-                    var elapsedTime = (currentTime - startTime).toDouble() / 1_000_000_000
+            modelViewer.render(currentTime) //Render model
 
-                    handler.post {
-                        modelViewer.render(currentTime)
+            if(isAnimationRunning) {
+                executor.execute {
+                    try {
+                        var elapsedTime = (currentTime - startTime).toDouble() / 1_000_000_000
 
-                        // Use sampleAngles and sampleAngularVelocities to control the animation
-                        val sampleIndex = (elapsedTime * animationSpeed) % sampleAngles.size
+                        handler.post {
 
-                        // Reset startTime if we've reached the end of the animation
-                        if (sampleIndex < 1) {
-                            startTime = currentTime
-                            elapsedTime = 0.0
+                            // Use sampleAngles and sampleAngularVelocities to control the animation
+                            val sampleIndex = (elapsedTime * animationSpeed) % sampleAngles.size
+
+//                            // Reset startTime if we've reached the end of the animation
+//                            if (sampleIndex < 1) {
+//                                startTime = currentTime
+//                                elapsedTime = 0.0
+//                            }
+
+                            val currentSampleAngle = sampleAngles[sampleIndex.toInt()]
+                            val currentSampleAngularVelocity = sampleAngularVelocities[sampleIndex.toInt()]
+
+                            val rotationMatrix = FloatArray(16)
+                            Matrix.setRotateM(rotationMatrix, 0, currentSampleAngle, 1f, 0f, 0f) // Rotate around the X axis
+
+                            // Only apply rotation matrix to Spine_53 entity
+                            modelViewer.asset?.getFirstEntityByName("Spine_53")?.setTransform(rotationMatrix)
+
+                            modelViewer.animator?.updateBoneMatrices()
+                            modelViewer.render(currentTime)
                         }
-
-                        val currentSampleAngle = sampleAngles[sampleIndex.toInt()]
-                        val currentSampleAngularVelocity = sampleAngularVelocities[sampleIndex.toInt()]
-
-                        val rotationMatrix = FloatArray(16)
-                        Matrix.setRotateM(rotationMatrix, 0, currentSampleAngle, 1f, 0f, 0f) // Rotate around the X axis
-
-                        // Only apply rotation matrix to Spine_53 entity
-                        modelViewer.asset?.getFirstEntityByName("Spine_53")?.setTransform(rotationMatrix)
-
-                        modelViewer.animator?.updateBoneMatrices()
-                        modelViewer.render(currentTime)
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
                     }
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
                 }
             }
+
         }
     }
 
