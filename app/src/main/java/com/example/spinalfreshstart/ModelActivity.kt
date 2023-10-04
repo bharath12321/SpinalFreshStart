@@ -39,7 +39,7 @@ class ModelActivity : Activity() {
     private lateinit var choreographer: Choreographer
     private lateinit var modelViewer: ModelViewer
 
-
+    private var angleSampleIndex = 0 //Keeping track of angle in array
     private var isSessionActive = false
     private var isAnimationRunning = false
     private var sessionElapsedTime: Long = 0
@@ -87,6 +87,8 @@ class ModelActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_model)
 
+        FirebaseApp.initializeApp(this)
+
         findViewById<TextView>(R.id.titleTextView)
         surfaceView = findViewById(R.id.modelSurfaceView)
 
@@ -94,9 +96,6 @@ class ModelActivity : Activity() {
         val startSessionButton = findViewById<Button>(R.id.startSessionButton)
         val endSessionButton = findViewById<Button>(R.id.endSessionButton)
         val sessionTimer = findViewById<TextView>(R.id.sessionStatusTextView)
-
-        FirebaseApp.initializeApp(this)
-        connectFirebase()
 
         backButton.setOnClickListener {
             finish()
@@ -120,8 +119,6 @@ class ModelActivity : Activity() {
                 sessionElapsedTime = 0
                 sessionTimer.setTextColor(getColor(android.R.color.holo_green_light))
                 sessionTimer.text = "Current Session: 00:00"
-
-                connectFirebase()
 
                 val sessionHandler = Handler(Looper.getMainLooper())
                 sessionHandler.post(object : Runnable {
@@ -161,23 +158,30 @@ class ModelActivity : Activity() {
 
     }
 
-    private fun connectFirebase() {
+//    private fun connectFirebase() {
+//        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+//        val myRef: DatabaseReference = database.getReference("bendAngle")
+//        println("Connected with Firebase...")
+//
+//        var counter = 0
+//        firebaseTimer = Timer()
+//        firebaseTimer?.schedule(object: TimerTask(){
+//            override fun run() {
+//                if(counter < sampleAngles.size && isSessionActive) {
+//                    myRef.setValue(sampleAngles[counter].toDouble())
+//                    counter++
+//                } else {
+//                    counter = 0
+//                }
+//            }
+//        }, 0, 100)
+//    }
+
+    // Function to update Firebase data
+    private fun updateFirebaseData(angle: Float) {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("bendAngle")
-        println("Connected with Firebase...")
-
-        var counter = 0
-        firebaseTimer = Timer()
-        firebaseTimer?.schedule(object: TimerTask(){
-            override fun run() {
-                if(counter < sampleAngles.size && isSessionActive == true) {
-                    myRef.setValue(sampleAngles[counter].toDouble())
-                    counter++
-                } else {
-                    counter = 0
-                }
-            }
-        }, 0, 100)
+        myRef.setValue(angle.toDouble())
     }
 
 
@@ -199,18 +203,20 @@ class ModelActivity : Activity() {
                         var elapsedTime = (currentTime - startTime).toDouble() / 1_000_000_000
 
                         handler.post {
-
                             // Use sampleAngles and sampleAngularVelocities to control the animation
-                            val sampleIndex = (elapsedTime * animationSpeed) % sampleAngles.size
+                             angleSampleIndex = ((elapsedTime * animationSpeed) % sampleAngles.size).toInt()
 
 //                            // Reset startTime if we've reached the end of the animation
 //                            if (sampleIndex < 1) {
 //                                startTime = currentTime
 //                                elapsedTime = 0.0
 //                            }
+                            if(isSessionActive) {
+                                updateFirebaseData(sampleAngles[angleSampleIndex])
+                            }
 
-                            val currentSampleAngle = sampleAngles[sampleIndex.toInt()]
-                            val currentSampleAngularVelocity = sampleAngularVelocities[sampleIndex.toInt()]
+                            val currentSampleAngle = sampleAngles[angleSampleIndex.toInt()]
+                            val currentSampleAngularVelocity = sampleAngularVelocities[angleSampleIndex.toInt()]
 
                             val rotationMatrix = FloatArray(16)
                             Matrix.setRotateM(rotationMatrix, 0, currentSampleAngle, 1f, 0f, 0f) // Rotate around the X axis
