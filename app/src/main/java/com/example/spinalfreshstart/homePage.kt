@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Chronometer
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.spinalfreshstart.R
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.DataPointInterface
 import com.jjoe64.graphview.series.LineGraphSeries
 
 /**
@@ -213,6 +215,32 @@ class homePage : Fragment() {
         }
 
         drawStraightLineFromYAxisValue(lineGraphView, harmfulAngle.toFloat())
+
+        val values = series1.getValues(min,max)
+        var count1 = 0.0
+        var totalCount= 0.0
+        for (dataPoint in  values) {
+            val yValue = dataPoint.y // Get the y-value of the data point
+            if(yValue>harmfulAngle){
+                println("y-Value is $yValue")
+                count1 += 1.0
+                totalCount++
+            } else {
+                totalCount++
+                continue
+            }
+        }
+        var ratio = count1/totalCount
+        var harmfulAngleDuration = series1.highestValueX * ratio
+
+        println("harmfulAngleCount is $count1")
+        println("totalCount is $totalCount")
+        println("ratio is $ratio")
+        println("Harmful angle duration: "+ harmfulAngleDuration +" out of "+ series1.highestValueX)
+
+        val angleTextView = view?.findViewById<TextView>(R.id.textHarmfulAngle)
+        angleTextView?.text= harmfulAngleDuration.toString()
+
 
         lineGraphView.animate()
         lineGraphView.viewport.isScrollable = true
