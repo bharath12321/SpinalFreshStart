@@ -44,6 +44,7 @@ class ModelActivity : Activity() {
     private var isAnimationRunning = false
     private var sessionElapsedTime: Long = 0
 
+    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var firebaseTimer: Timer? = null
 
     // Constants for controlling animation speed
@@ -97,6 +98,8 @@ class ModelActivity : Activity() {
         val endSessionButton = findViewById<Button>(R.id.endSessionButton)
         val sessionTimer = findViewById<TextView>(R.id.sessionStatusTextView)
 
+        val myRefFlag: DatabaseReference = database.getReference("sessionActive")
+
         backButton.setOnClickListener {
             finish()
         }
@@ -116,6 +119,8 @@ class ModelActivity : Activity() {
             } else
             {
                 isSessionActive = true
+                myRefFlag.setValue(1)
+
                 sessionElapsedTime = 0
                 sessionTimer.setTextColor(getColor(android.R.color.holo_green_light))
                 sessionTimer.text = "Current Session: 00:00"
@@ -144,8 +149,9 @@ class ModelActivity : Activity() {
                 Log.d("MyApp", "No active sessions")
 
             } else {
-
                 isSessionActive = false
+                myRefFlag.setValue(0)
+
                 isAnimationRunning = false
                 sessionTimer.setTextColor(getColor(android.R.color.holo_red_light))
 
@@ -179,7 +185,7 @@ class ModelActivity : Activity() {
 
     // Function to update Firebase data
     private fun updateFirebaseData(angle: Float) {
-        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+        //val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("bendAngle")
         myRef.setValue(angle.toDouble())
     }
@@ -211,6 +217,7 @@ class ModelActivity : Activity() {
 //                                startTime = currentTime
 //                                elapsedTime = 0.0
 //                            }
+
                             if(isSessionActive) {
                                 updateFirebaseData(sampleAngles[angleSampleIndex])
                             }
