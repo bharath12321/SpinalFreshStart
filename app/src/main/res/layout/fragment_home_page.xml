@@ -9,7 +9,8 @@
         android:fillViewport="false">
 
 
-<FrameLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".homePage"
@@ -45,133 +46,162 @@
 
 
     </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="360dp"
-            android:layout_height="550dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="430dp">
-
-
-        <TextView
-                android:id="@+id/standing_text_id"
-                android:layout_height="31dp"
-                android:layout_width="233dp"
-                android:textColor="@color/black"
-                android:text="Standing Session:"
-                android:textSize="24dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.59" />
-
-        <ImageView
-                android:layout_width="68dp"
-                android:layout_height="96dp"
-                android:src="@drawable/standing_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="24dp"
-                app:layout_constraintHorizontal_bias="0.0" />
-
-        <Chronometer
-                android:id="@+id/chronometerOne"
-                android:layout_width="142dp"
-                android:layout_height="55dp"
-                android:textSize="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="60dp"
-                app:layout_constraintHorizontal_bias="0.344" />
-
-        <Button
-                android:id="@+id/startbuttonTimerOne"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.275"
-                app:layout_constraintTop_toBottomOf="@+id/chronometerOne"
-                android:layout_marginTop="4dp"
-                android:text="@string/startButton" />
-
-        <Button
-                android:id="@+id/stopbuttonTimerOne"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.669"
-                app:layout_constraintTop_toBottomOf="@+id/chronometerOne"
-                android:layout_marginTop="4dp"
-                android:text="Stop" />
-
-        <ImageView
-                android:layout_width="68dp"
-                android:layout_height="96dp"
-                android:src="@drawable/lifting_session"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="232dp"
-                app:layout_constraintHorizontal_bias="0.0" />
-
-        <Chronometer
-                android:id="@+id/chronometerTwo"
-                android:layout_width="142dp"
-                android:layout_height="55dp"
-                android:textSize="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="272dp"
-                app:layout_constraintHorizontal_bias="0.389" />
-
-        <TextView
-                android:id="@+id/lifting_text_id"
-                android:layout_height="31dp"
-                android:layout_width="233dp"
-                android:textColor="@color/black"
-                android:text="Lifting Session:"
-                android:textSize="24dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="232dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.669" />
-
-        <Button
-                android:id="@+id/startbuttonTimerTwo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.275"
-                app:layout_constraintTop_toBottomOf="@+id/chronometerTwo"
-                android:layout_marginTop="4dp"
-                android:text="@string/startButton" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="360dp"
+                android:layout_height="550dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="430dp">
 
 
-        <Button
-                android:id="@+id/stopbuttonTimerTwo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.669"
-                app:layout_constraintTop_toBottomOf="@+id/chronometerTwo"
-                android:layout_marginTop="4dp"
-                android:text="Stop" />
+            <TextView
+                    android:layout_width="188dp"
+                    android:layout_height="28dp"
+                    android:text="Harmful Angle Duration:"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints"
+                    app:layout_constraintBottom_toTopOf="@+id/standing_text_id"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textHarmfulAngle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.4"
+                    app:layout_constraintVertical_bias="0.101" />
+
+            <TextView
+                    android:id="@+id/textHarmfulAngle"
+                    android:layout_width="151dp"
+                    android:layout_height="28dp"
+                    android:text="@{homePage.harmfulAngleDuration}"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="14dp"
+                    tools:ignore="MissingConstraints"
+                    app:layout_constraintBottom_toTopOf="@+id/standing_text_id"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintVertical_bias="0.103"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.987" />
+
+            <TextView
+                    android:id="@+id/standing_text_id"
+                    android:layout_height="31dp"
+                    android:layout_width="233dp"
+                    android:textColor="@color/black"
+                    android:text="Standing Session:"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="128dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.59" />
+
+            <ImageView
+                    android:layout_width="68dp"
+                    android:layout_height="96dp"
+                    android:src="@drawable/standing_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="168dp"
+                    app:layout_constraintHorizontal_bias="0.0" />
+
+            <Chronometer
+                    android:id="@+id/chronometerOne"
+                    android:layout_width="142dp"
+                    android:layout_height="55dp"
+                    android:textSize="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="168dp"
+                    app:layout_constraintHorizontal_bias="0.545" />
+
+            <Button
+                    android:id="@+id/startbuttonTimerOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.275"
+                    app:layout_constraintTop_toBottomOf="@+id/chronometerOne"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/startButton" />
+
+            <Button
+                    android:id="@+id/stopbuttonTimerOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.669"
+                    app:layout_constraintTop_toBottomOf="@+id/chronometerOne"
+                    android:layout_marginTop="4dp"
+                    android:text="Stop" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                    android:layout_width="68dp"
+                    android:layout_height="96dp"
+                    android:src="@drawable/lifting_session"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="352dp"
+                    app:layout_constraintHorizontal_bias="0.054" />
 
-</FrameLayout>
+            <Chronometer
+                    android:id="@+id/chronometerTwo"
+                    android:layout_width="142dp"
+                    android:layout_height="55dp"
+                    android:textSize="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="356dp" />
+
+            <TextView
+                    android:id="@+id/lifting_text_id"
+                    android:layout_height="31dp"
+                    android:layout_width="233dp"
+                    android:textColor="@color/black"
+                    android:text="Lifting Session:"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="312dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.669" />
+
+            <Button
+                    android:id="@+id/startbuttonTimerTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.275"
+                    app:layout_constraintTop_toBottomOf="@+id/chronometerTwo"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/startButton" />
+
+            <Button
+                    android:id="@+id/stopbuttonTimerTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.636"
+                    app:layout_constraintTop_toBottomOf="@+id/chronometerTwo"
+                    android:layout_marginTop="24dp"
+                    android:text="Stop" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 </ScrollView>
 
 

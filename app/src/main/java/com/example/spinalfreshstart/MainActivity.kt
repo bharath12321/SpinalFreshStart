@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
+
         //textView = findViewById(R.id.user_details_main);
         user = auth!!.currentUser
         if (user == null) {

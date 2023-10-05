@@ -53,6 +53,11 @@ private val colorGradient = List(100) { index ->
         blue = 0
     )
 }
+fun IfCriticalAngle(angle:Int){
+    if(angle >= 80){
+        //View.performHapticFeedback(HapticFeedbackConstant.)
+    }
+}
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
 fun RunScreenPreview() {
@@ -84,9 +89,11 @@ fun RunScreen(navController: NavController) {
             var angleValue = remember { mutableStateOf(20f)}
             var angleNum = 0
             var vibrate = remember { mutableStateOf(false) }
+
             var timerRunningState by remember { mutableStateOf(TimerState.RUNNING) }
             var backgroundColor by remember { mutableStateOf(Color.Green) }
             var manageTimer by remember {mutableStateOf(false)}
+
 
             LaunchedEffect(key1 = true){
                 while(true){
@@ -103,6 +110,7 @@ fun RunScreen(navController: NavController) {
             LaunchedEffect(angleValue.value) {
                 vibrate.value = angleValue.value >= 80
                 backgroundColor = getColorForValue(angleValue.value)
+
             }
             LaunchedEffect(key1 = timerRunningState) {
                 while (timerRunningState == TimerState.RUNNING) {
@@ -113,6 +121,7 @@ fun RunScreen(navController: NavController) {
 
             LaunchedEffect(vibrate.value){
                 if(vibrate.value){
+
                     println("every 5 seconds")
                     if(vibrator.hasVibrator()) {
                         println("has vibrator")
@@ -263,8 +272,10 @@ fun getNumGradient(angle: Int): Int{
 }
 
 // Function to determine background color based on the value
+
 fun getColorForValue(value: Float): Color {
     return colorGradient[getNumGradient(value.toInt()) %100]
+
 }
 
 // Function to format time in MM:SS format

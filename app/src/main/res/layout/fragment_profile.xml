@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".ProfileFragment"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ProfileFragment">
 
+    <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/user"
+            android:contentDescription="User Profile Image"
+            android:layout_marginTop="50dp" />
 
-    <TextView
-            android:layout_width="194dp"
-            android:layout_height="48dp"
-            android:textSize="25dp"
-            android:textColor="@color/black"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="140dp"
-            android:text="Profile Page"/>
 
     <TextView
             android:id="@+id/user_details_profile"
@@ -25,20 +25,46 @@
             android:text="Hello User!"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="240dp"
-            android:textSize="21sp"
-             />
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp" />
 
     <Button
             android:id="@+id/Logout_profile"
-            android:text="Logout"
-            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="140dp"
-            android:layout_marginTop="340dp"
-             />
+            android:text="Logout"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp" />
 
+    <!-- RelativeLayout to combine the image and text -->
+    <RelativeLayout
+            android:id="@+id/calibrateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#673AB7"
+            android:layout_marginTop="130dp">
 
-</FrameLayout>
+        <ImageView
+                android:id="@+id/calibrateImage"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/bending_over"
+                android:layout_gravity="center"
+                android:contentDescription="Calibrate Your Back" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/calibrateImage"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:text="Calibrate Your Back "
+                android:textSize="18sp"
+                android:textColor="@android:color/white"/>
+    </RelativeLayout>
+
+</LinearLayout>
