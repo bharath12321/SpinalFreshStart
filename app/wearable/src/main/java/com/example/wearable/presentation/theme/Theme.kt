@@ -41,7 +41,7 @@ private val MyTypography = Typography(
     ),
     title2 = TextStyle(
         fontWeight = FontWeight.Bold,
-        fontSize = 32.sp,
+        fontSize = 30.sp,
         letterSpacing = 1.15.sp
     ),
     title3 = TextStyle(

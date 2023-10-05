@@ -15,6 +15,24 @@ class MyMobileService : WearableListenerService() {
             }
         }
     }
+    private fun sendSessionData(sessionId: String){
+        val nodeListTask: Task<List<Node>> = Wearable.getNodeClient(this).connectedNodes
+        nodeListTask.addOnSuccessListener { nodes ->
+            for(node in nodes){
+                val sendMessageTask: Task<Int> = Wearable.getMessageClient(this)
+                    .sendMessage(node.id,"/session_id", sessionId.toByteArray())
+            }
+        }
+    }
+    private fun sendLiveAngle(angle: String){
+        val nodeListTask: Task<List<Node>> = Wearable.getNodeClient(this).connectedNodes
+        nodeListTask.addOnSuccessListener { nodes ->
+            for(node in nodes){
+                val sendMessageTask: Task<Int> = Wearable.getMessageClient(this)
+                    .sendMessage(node.id,"/liveAngle", angle.toByteArray())
+            }
+        }
+    }
 
     // Override other methods as needed
 }
