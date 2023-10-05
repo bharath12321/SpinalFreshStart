@@ -1,6 +1,5 @@
 package com.example.spinalfreshstart
 
-
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
