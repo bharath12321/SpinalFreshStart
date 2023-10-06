@@ -19,6 +19,5 @@ class MyMobileService : WearableListenerService() {
         }
 
     }
-
     // Override other methods as needed
 }
