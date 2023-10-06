@@ -38,31 +38,31 @@
             android:layout_marginTop="16dp" />
 
     <!-- RelativeLayout to combine the image and text -->
-    <RelativeLayout
-            android:id="@+id/calibrateButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="#673AB7"
-            android:layout_marginTop="130dp">
+<!--    <RelativeLayout-->
+<!--            android:id="@+id/calibrateButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="#673AB7"-->
+<!--            android:layout_marginTop="130dp">-->
 
-        <ImageView
-                android:id="@+id/calibrateImage"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/bending_over"
-                android:layout_gravity="center"
-                android:contentDescription="Calibrate Your Back" />
+<!--        <ImageView-->
+<!--                android:id="@+id/calibrateImage"-->
+<!--                android:layout_width="35dp"-->
+<!--                android:layout_height="35dp"-->
+<!--                android:src="@drawable/bending_over"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:contentDescription="Calibrate Your Back" />-->
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/calibrateImage"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:text="Calibrate Your Back "
-                android:textSize="18sp"
-                android:textColor="@android:color/white"/>
-    </RelativeLayout>
+<!--        <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_toEndOf="@id/calibrateImage"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:text="Calibrate Your Back "-->
+<!--                android:textSize="18sp"-->
+<!--                android:textColor="@android:color/white"/>-->
+<!--    </RelativeLayout>-->
 
 </LinearLayout>
