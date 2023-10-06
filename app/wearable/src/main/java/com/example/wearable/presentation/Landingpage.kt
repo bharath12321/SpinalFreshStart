@@ -64,7 +64,7 @@ fun LandingView(navController: NavController) {
             ) {
 
                 Text(
-                    text = "username",
+                    text = ListenerService.UserData.userEmail,
                     color = MaterialTheme.colors.onSecondary,
                     style = MaterialTheme.typography.body2
                 )

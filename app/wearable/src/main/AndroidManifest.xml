@@ -36,7 +36,18 @@
             </intent-filter>
         </activity>
 
-        <!--service todo    -->
+        <service
+                android:name=".presentation.ListenerService"
+                android:enabled="true"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECIEVED" />
+                <data android:scheme ="wear" android:host="*" android:pathPrefix="/>request-network" />
+            </intent-filter>
+        </service>
+        <service
+                android:name=".presentation.WearSendMessage"
+                android:exported="false"/>
     </application>
 
 </manifest>

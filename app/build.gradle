@@ -7,7 +7,7 @@ plugins {
 android {
     namespace 'com.example.spinalfreshstart'
     compileSdk 33
-
+    apply plugin: 'com.android.application'
     defaultConfig {
         applicationId "com.example.spinalfreshstart"
         minSdk 26

@@ -121,6 +121,7 @@ class ModelActivity : Activity() {
                 isSessionActive = true
                 myRefFlag.setValue(1)
 
+
                 sessionElapsedTime = 0
                 sessionTimer.setTextColor(getColor(android.R.color.holo_green_light))
                 sessionTimer.text = "Current Session: 00:00"
@@ -188,6 +189,7 @@ class ModelActivity : Activity() {
         //val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("bendAngle")
         myRef.setValue(angle.toDouble())
+        MobileSender(this).sendMessage("angle",angle.toString().toByteArray())
     }
 
 

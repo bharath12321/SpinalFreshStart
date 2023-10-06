@@ -40,6 +40,7 @@ import androidx.compose.ui.res.painterResource
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import com.example.wearable.R
@@ -97,12 +98,12 @@ fun RunScreen(navController: NavController) {
 
             LaunchedEffect(key1 = true){
                 while(true){
-                    angleValue.value = Angles.nums.get(angleNum).toFloat()
-                    if(angleNum < Angles.nums.size - 1) {
+                    angleValue.value = ListenerService.UserData.liveAngle!!.toFloat()
+                    /*if(angleNum < Angles.nums.size - 1) {
                         angleNum += 1
                     }else{
                         angleNum = 0
-                    }
+                    }*/
                     delay(50L)
                 }
             }
@@ -148,14 +149,17 @@ fun RunScreen(navController: NavController) {
             fun playTimer(){
                 timerRunningState = TimerState.RUNNING
                 manageTimer = !manageTimer
+                WearSender(context).sendMessage("timer","play".toByteArray())
             }
             fun pauseTimer(){
                 timerRunningState = TimerState.PAUSED
+                WearSender(context).sendMessage("timer","pause".toByteArray())
             }
             fun stopTimer(){
                 timerRunningState = TimerState.STOPPED
                 timerValue.value = 0
                 manageTimer = !manageTimer
+                WearSender(context).sendMessage("timer","stop".toByteArray())
             }
 
 
