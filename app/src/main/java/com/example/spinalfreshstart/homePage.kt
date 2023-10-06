@@ -1,5 +1,8 @@
 package com.example.spinalfreshstart
+import akka.http.scaladsl.server.RejectionHandler
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +12,8 @@ import android.widget.Chronometer
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.spinalfreshstart.R
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.Transaction
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.DataPointInterface
@@ -203,6 +208,10 @@ class homePage : Fragment() {
         val max = series1.highestValueY;
         val min = series1.lowestValueY;
         val harmfulAngle = (max-min)*(0.8)+min;
+        val modelActivity = ModelActivity()
+
+        val harmfulAngleMyRef: DatabaseReference = modelActivity.database.getReference("harmfulAngle")
+        harmfulAngleMyRef.setValue(harmfulAngle)
 
         fun drawStraightLineFromYAxisValue(graphView: GraphView, angle: Float) {
             val lineGraphSeries = LineGraphSeries<DataPoint>()
@@ -280,3 +289,4 @@ class homePage : Fragment() {
         }
     }
 }
+
