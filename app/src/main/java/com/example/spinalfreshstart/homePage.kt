@@ -1,5 +1,6 @@
 package com.example.spinalfreshstart
 import akka.http.scaladsl.server.RejectionHandler
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,6 +19,9 @@ import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.DataPointInterface
 import com.jjoe64.graphview.series.LineGraphSeries
+import android.icu.util.DateInterval
+
+
 
 /**
  * A simple [Fragment] subclass.
@@ -73,6 +77,24 @@ class homePage : Fragment() {
         stopTimerTwo.setOnClickListener {
             timerTwo.stop()
         }
+
+        val modelActivity = ModelActivity()
+        val series2: LineGraphSeries<DataPoint> = LineGraphSeries()
+        var dataIndex = 0
+
+
+
+//        val timeInter
+//
+//
+//        val newRun = object : Runnable {
+//            override fun run()
+//                val time = timeIntervals[dataIndex]
+//
+//
+//            }
+//
+//        }
 
         val series1: LineGraphSeries<DataPoint> = LineGraphSeries(
             arrayOf(
@@ -208,7 +230,7 @@ class homePage : Fragment() {
         val max = series1.highestValueY;
         val min = series1.lowestValueY;
         val harmfulAngle = (max-min)*(0.8)+min;
-        val modelActivity = ModelActivity()
+
 
         val harmfulAngleMyRef: DatabaseReference = modelActivity.database.getReference("harmfulAngle")
         harmfulAngleMyRef.setValue(harmfulAngle)
@@ -218,6 +240,7 @@ class homePage : Fragment() {
             val harmfulAngleDouble = angle.toDouble()
             val startPoint = DataPoint(series1.lowestValueX,  harmfulAngleDouble)
             val endPoint = DataPoint(series1.highestValueX,  harmfulAngleDouble)
+            lineGraphSeries.color = Color.RED
             lineGraphSeries.appendData(startPoint, true, 2)
             lineGraphSeries.appendData(endPoint, true, 2)
             graphView.addSeries(lineGraphSeries)
@@ -247,8 +270,11 @@ class homePage : Fragment() {
         println("ratio is $ratio")
         println("Harmful angle duration: "+ harmfulAngleDuration +" out of "+ series1.highestValueX)
 
+        val floatHarmfulAngleDuration = String.format("%.2f", harmfulAngleDuration.toFloat()).toFloat()
+
+
         val angleTextView = view?.findViewById<TextView>(R.id.textHarmfulAngle)
-        angleTextView?.text= harmfulAngleDuration.toString()
+        angleTextView?.text= floatHarmfulAngleDuration.toString()
 
 
         lineGraphView.animate()
