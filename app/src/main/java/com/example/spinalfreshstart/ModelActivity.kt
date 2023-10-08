@@ -38,6 +38,7 @@ class ModelActivity : Activity() {
     private lateinit var surfaceView: SurfaceView
     private lateinit var choreographer: Choreographer
     private lateinit var modelViewer: ModelViewer
+    private lateinit var mobSend: MobileSender
 
     private var angleSampleIndex = 0 //Keeping track of angle in array
     private var isSessionActive = false
@@ -97,6 +98,7 @@ class ModelActivity : Activity() {
         val startSessionButton = findViewById<Button>(R.id.startSessionButton)
         val endSessionButton = findViewById<Button>(R.id.endSessionButton)
         val sessionTimer = findViewById<TextView>(R.id.sessionStatusTextView)
+        mobSend = MobileSender(applicationContext)
 
         val myRefFlag: DatabaseReference = database.getReference("sessionActive")
 
@@ -189,7 +191,7 @@ class ModelActivity : Activity() {
         //val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("bendAngle")
         myRef.setValue(angle.toDouble())
-        MobileSender(this).sendMessage("angle",angle.toString().toByteArray())
+        mobSend.sendMessage("/SentFromPhone/angle",angle.toString().toByteArray())
     }
 
 

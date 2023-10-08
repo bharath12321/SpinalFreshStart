@@ -41,13 +41,11 @@
                 android:enabled="true"
                 android:exported="true">
             <intent-filter>
-                <action android:name="com.google.android.gms.wearable.MESSAGE_RECIEVED" />
-                <data android:scheme ="wear" android:host="*" android:pathPrefix="/>request-network" />
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <data android:scheme ="wear" android:host="*" android:pathPrefix="/SentFromPhone"/>
             </intent-filter>
         </service>
-        <service
-                android:name=".presentation.WearSendMessage"
-                android:exported="false"/>
+
     </application>
 
 </manifest>

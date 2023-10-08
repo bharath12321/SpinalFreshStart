@@ -5,6 +5,8 @@
  */
 
 package com.example.wearable.presentation
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,19 +14,22 @@ import androidx.compose.runtime.Composable
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.google.android.gms.common.api.GoogleApiClient
 
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WearApp()
-
+            WearApp(this)
         }
     }
+    public fun sendMessage(){
+
+    }
+
 }
 @Composable
-fun WearApp(){
+fun WearApp(context: Context){
     val navController = rememberSwipeDismissableNavController()
     SwipeDismissableNavHost(
         navController = navController,
@@ -34,7 +39,7 @@ fun WearApp(){
             LandingView(navController)
         }
         composable(Screen.ActivityRun.route) {
-            RunScreen(navController)
+            RunScreen(navController,context)
         }
         composable(Screen.Analytics.route){
             AnalyticsScreen(navController)

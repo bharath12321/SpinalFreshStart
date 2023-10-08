@@ -1,6 +1,7 @@
 package com.example.wearable.presentation
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -59,17 +60,11 @@ fun IfCriticalAngle(angle:Int){
         //View.performHapticFeedback(HapticFeedbackConstant.)
     }
 }
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
-@Composable
-fun RunScreenPreview() {
-    val navController = rememberSwipeDismissableNavController()
-    RunScreen(navController = navController)
-}
 
 
 
 @Composable
-fun RunScreen(navController: NavController) {
+fun RunScreen(navController: NavController, context: Context) {
     SpinalFreshStartWearTheme {
         Box(
             modifier = Modifier
@@ -77,7 +72,6 @@ fun RunScreen(navController: NavController) {
                 .background(MaterialTheme.colors.background)
                 .padding(10.dp)
         ) {
-            val context = LocalContext.current
 
             val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
@@ -98,13 +92,13 @@ fun RunScreen(navController: NavController) {
 
             LaunchedEffect(key1 = true){
                 while(true){
-                    angleValue.value = ListenerService.UserData.liveAngle!!.toFloat()
+                    angleValue.value = ListenerService.liveAngle
                     /*if(angleNum < Angles.nums.size - 1) {
                         angleNum += 1
                     }else{
                         angleNum = 0
                     }*/
-                    delay(50L)
+                    delay(100L)
                 }
             }
             // Simulating color change based on timer value
@@ -149,17 +143,17 @@ fun RunScreen(navController: NavController) {
             fun playTimer(){
                 timerRunningState = TimerState.RUNNING
                 manageTimer = !manageTimer
-                WearSender(context).sendMessage("timer","play".toByteArray())
+                //WearSender(context).sendMessage("timer","play".toByteArray())
             }
             fun pauseTimer(){
                 timerRunningState = TimerState.PAUSED
-                WearSender(context).sendMessage("timer","pause".toByteArray())
+                //WearSender(context).sendMessage("timer","pause".toByteArray())
             }
             fun stopTimer(){
                 timerRunningState = TimerState.STOPPED
                 timerValue.value = 0
                 manageTimer = !manageTimer
-                WearSender(context).sendMessage("timer","stop".toByteArray())
+                //WearSender(context).sendMessage("timer","stop".toByteArray())
             }
 
 

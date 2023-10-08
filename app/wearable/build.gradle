@@ -8,7 +8,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.wearable"
+        applicationId "com.example.spinalfreshstart"
         minSdk 30
         targetSdk 33
         versionCode 1

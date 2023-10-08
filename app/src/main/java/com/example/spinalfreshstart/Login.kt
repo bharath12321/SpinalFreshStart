@@ -61,7 +61,7 @@ class Login : AppCompatActivity() {
                     progressBar?.visibility = View.GONE
                     if (task.isSuccessful) {
                         //send wear users email
-                        mAuth!!.currentUser?.email?.let { it1 -> MobileSender(this).sendMessage("login", it1.toByteArray()) }
+                        mAuth!!.currentUser?.email?.let { it1 -> MobileSender(this).sendMessage("/email", it1.toByteArray()) }
 
                         Toast.makeText(applicationContext, "Login Successful!", Toast.LENGTH_SHORT)
                             .show()

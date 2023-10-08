@@ -1,4 +1,5 @@
 package com.example.spinalfreshstart
+import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.Node
@@ -8,13 +9,14 @@ import com.google.android.gms.wearable.WearableListenerService
 
 class MyMobileService : WearableListenerService() {
 
-    object SessionState {
+    companion object SessionState {
         var state: String = "stop"
     }
     override fun onMessageReceived(messageEvent: MessageEvent) {
         super.onMessageReceived(messageEvent)
+        Log.d("received","yes")
         if ("timer" == messageEvent.path) {
-            SessionState.state = String(messageEvent.data)
+            state = String(messageEvent.data)
             // Handle user ID: Display user data or show login state.
         }
 

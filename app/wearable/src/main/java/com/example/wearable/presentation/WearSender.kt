@@ -12,9 +12,12 @@ class WearSender (context : Context){
 
     fun sendMessage(path: String, data: ByteArray){
         nodeTasks.addOnSuccessListener { nodes ->
-            for(node in nodes){
-                messageClient.sendMessage(node.id,path,data)
+            if (nodes.isNotEmpty()) {
+                for (node in nodes) {
+                    messageClient.sendMessage(node.id, "/SentFromWear", data)
+                }
             }
         }
     }
+
 }

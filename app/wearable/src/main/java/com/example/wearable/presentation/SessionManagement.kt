@@ -1,5 +1,6 @@
 package com.example.wearable.presentation
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,12 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.example.wearable.R
 
 
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
-@Composable
-fun SessionManagementScreenPreview() {
-    val navController = rememberSwipeDismissableNavController()
-    ManageScreen(navController = navController)
-}
+
 @Composable
 fun ManageScreen(navController: NavController){
     SpinalFreshStartWearTheme {

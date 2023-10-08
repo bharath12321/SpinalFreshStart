@@ -1,5 +1,6 @@
 package com.example.wearable.presentation
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,12 +36,7 @@ import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.example.wearable.R
 import com.example.wearable.presentation.theme.SpinalFreshStartWearTheme
 
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
-@Composable
-fun LandingViewPreview() {
-    val navController = rememberSwipeDismissableNavController()
-    LandingView(navController = navController)
-}
+
 
 @Composable
 fun LandingView(navController: NavController) {
@@ -64,7 +60,7 @@ fun LandingView(navController: NavController) {
             ) {
 
                 Text(
-                    text = ListenerService.UserData.userEmail,
+                    text = ListenerService.userEmail,
                     color = MaterialTheme.colors.onSecondary,
                     style = MaterialTheme.typography.body2
                 )

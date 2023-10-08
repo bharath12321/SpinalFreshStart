@@ -1,5 +1,6 @@
 package com.example.wearable.presentation
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -31,12 +32,7 @@ import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.example.wearable.presentation.theme.SpinalFreshStartWearTheme
 import kotlinx.datetime.LocalDate
 
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
-@Composable
-fun SessionsScreenPreview() {
-    val navController = rememberSwipeDismissableNavController()
-    SessionsScreen(navController = navController)
-}
+
 
 @Composable
 fun SessionsScreen(navController: NavController) {
