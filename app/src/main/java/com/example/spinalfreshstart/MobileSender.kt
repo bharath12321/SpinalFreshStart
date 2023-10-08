@@ -13,14 +13,16 @@ import java.util.concurrent.Executors
 
 
 class MobileSender(context: Context): Thread() {
-    private val messageClient: MessageClient = Wearable.getMessageClient(context)
-    private val nodeTasks: Task<List<Node>> = Wearable.getNodeClient(context).connectedNodes
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+    private val context: Context = context
     object SessionState {
         var state: String = "stop"
     }
 
     fun sendMessage(path: String, data: ByteArray) {
+
+        val messageClient: MessageClient = Wearable.getMessageClient(context)
+        val nodeTasks: Task<List<Node>> = Wearable.getNodeClient(context).connectedNodes
         executorService.submit{
             try {
                 val nodes = Tasks.await<List<Node>>(nodeTasks)
