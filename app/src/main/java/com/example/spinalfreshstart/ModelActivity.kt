@@ -22,6 +22,12 @@ import java.nio.ByteBuffer
 import java.util.concurrent.Executors
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DatabaseError
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Timer
 import java.util.TimerTask
 import java.util.concurrent.TimeUnit
@@ -47,6 +53,7 @@ class ModelActivity : Activity() {
 
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var firebaseTimer: Timer? = null
+    private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     // Constants for controlling animation speed
     private val animationSpeed = 20.0 // Adjust this value to control animation speed
@@ -85,6 +92,7 @@ class ModelActivity : Activity() {
         0.9f, 1.0f, 1.4f, 0.7f, 1.7f, 2.6f
     )
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_model)
@@ -101,7 +109,22 @@ class ModelActivity : Activity() {
         mobSend = MobileSender(applicationContext)
 
         val myRefFlag: DatabaseReference = database.getReference("sessionActive")
-
+        fun WearChecker(){
+            coroutineScope.launch{
+                while(isActive){
+                    if(MyMobileService.wearSession == true && isAnimationRunning == false){
+                        withContext(Dispatchers.Main) {
+                            startSessionButton.performClick()
+                        }
+                    }else if(MyMobileService.wearSession == false && isAnimationRunning == true){
+                        withContext(Dispatchers.Main){
+                            endSessionButton.performClick()
+                        }
+                    }
+                    delay(100L)
+                }
+            }
+        }
         backButton.setOnClickListener {
             finish()
         }
@@ -109,6 +132,7 @@ class ModelActivity : Activity() {
         choreographer = Choreographer.getInstance()
         modelViewer = ModelViewer(surfaceView)
         surfaceView.setOnTouchListener(modelViewer)
+        WearChecker()
 
         loadModelAndEnvironment("scene", "venetian_crossroads_2k")
 
@@ -117,13 +141,15 @@ class ModelActivity : Activity() {
             if (isSessionActive == true) {
                 Toast.makeText(this, "Session is currently active", Toast.LENGTH_SHORT).show()
                 Log.d("MyApp", "Session is already active")
+                mobSend.sendMessage("/session",true.toString().toByteArray())
+                MyMobileService.wearSession = true
 
             } else
             {
                 isSessionActive = true
                 myRefFlag.setValue(1)
-
-
+                mobSend.sendMessage("/session",true.toString().toByteArray())
+                MyMobileService.wearSession = true
                 sessionElapsedTime = 0
                 sessionTimer.setTextColor(getColor(android.R.color.holo_green_light))
                 sessionTimer.text = "Current Session: 00:00"
@@ -138,7 +164,7 @@ class ModelActivity : Activity() {
                             val seconds = TimeUnit.SECONDS.toSeconds(sessionElapsedTime) - TimeUnit.MINUTES.toSeconds(minutes)
 
                             sessionTimer.text = String.format("Current Session: %02d:%02d", minutes, seconds)
-
+                            mobSend.sendMessage("/timer",sessionElapsedTime.toString().toByteArray())
                             sessionHandler.postDelayed(this, 1000)
                         }
                     }
@@ -150,8 +176,11 @@ class ModelActivity : Activity() {
             if(isSessionActive == false) {
                 Toast.makeText(this, "No active sessions", Toast.LENGTH_SHORT).show()
                 Log.d("MyApp", "No active sessions")
-
+                mobSend.sendMessage("/session",false.toString().toByteArray())
+                MyMobileService.wearSession = false
             } else {
+                mobSend.sendMessage("/session",false.toString().toByteArray())
+                MyMobileService.wearSession = false
                 isSessionActive = false
                 myRefFlag.setValue(0)
 
@@ -191,7 +220,7 @@ class ModelActivity : Activity() {
         //val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef: DatabaseReference = database.getReference("bendAngle")
         myRef.setValue(angle.toDouble())
-        mobSend.sendMessage("/SentFromPhone/angle",angle.toString().toByteArray())
+        mobSend.sendMessage("/angle",angle.toString().toByteArray())
     }
 
 
@@ -243,6 +272,7 @@ class ModelActivity : Activity() {
                     }
                 }
             }
+
 
         }
     }

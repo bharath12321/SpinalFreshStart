@@ -36,7 +36,7 @@ fun WearApp(context: Context){
         startDestination = Screen.Landing.route
     ) {
         composable(Screen.Landing.route) {
-            LandingView(navController)
+            LandingView(navController,context)
         }
         composable(Screen.ActivityRun.route) {
             RunScreen(navController,context)

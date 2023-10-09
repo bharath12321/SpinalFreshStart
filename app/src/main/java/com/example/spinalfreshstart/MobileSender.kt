@@ -12,12 +12,9 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
-class MobileSender(context: Context): Thread() {
+class MobileSender(context: Context) {
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
     private val context: Context = context
-    object SessionState {
-        var state: String = "stop"
-    }
 
     fun sendMessage(path: String, data: ByteArray) {
 
@@ -30,7 +27,7 @@ class MobileSender(context: Context): Thread() {
                     Log.d("nodesSize","empty list of nodes (notconnected)")
                 }else{
                     for (node in nodes) {
-                        val sendMessageTask = messageClient.sendMessage(node.id, path, data)
+                        val sendMessageTask = messageClient.sendMessage(node.id,"/SentFromPhone$path", data)
                         try {
                             val result = Tasks.await(sendMessageTask)
                             Log.d("node = ",node.displayName)

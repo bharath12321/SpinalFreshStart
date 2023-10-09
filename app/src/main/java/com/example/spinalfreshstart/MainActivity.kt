@@ -28,10 +28,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, Login::class.java)
             startActivity(intent)
             finish()
+
         } else {
             println("Authentication error")
             // textView.setText(user.getEmail());
         }
+        MyMobileService.login = true
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupWithNavController(bottomNavigationView, navController!!)

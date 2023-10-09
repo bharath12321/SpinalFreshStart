@@ -10,14 +10,19 @@ import com.google.android.gms.wearable.WearableListenerService
 class MyMobileService : WearableListenerService() {
 
     companion object SessionState {
-        var state: String = "stop"
+        var wearSession: Boolean = false
+        var login: Boolean = false
     }
     override fun onMessageReceived(messageEvent: MessageEvent) {
         super.onMessageReceived(messageEvent)
         Log.d("received","yes")
-        if ("timer" == messageEvent.path) {
-            state = String(messageEvent.data)
+        if ("/SentFromWear/session" == messageEvent.path) {
+            wearSession = String(messageEvent.data).toBoolean()
             // Handle user ID: Display user data or show login state.
+        }else if("/SentFromWear/login" == messageEvent.path){
+            if(login){
+                MobileSender(this).sendMessage("/email","Successful Login".toByteArray())
+            }
         }
 
     }

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,14 +36,21 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.example.wearable.R
 import com.example.wearable.presentation.theme.SpinalFreshStartWearTheme
-
+import kotlinx.coroutines.delay
 
 
 @Composable
-fun LandingView(navController: NavController) {
+fun LandingView(navController: NavController, context: Context) {
     var userLoggedIn by remember { mutableStateOf(false) }
-    //userLoggedIn = ListenerService.UserData.userId
+    var wearSend: WearSender = WearSender(context)
+    LaunchedEffect(key1 = true){
+        while(!userLoggedIn){
+            userLoggedIn = ListenerService.userEmail.equals("Connected")
+            wearSend.sendMessage("/login","isLoggedIn?".toByteArray())
 
+            delay(500L)
+        }
+    }
 
 
     SpinalFreshStartWearTheme {
@@ -104,22 +112,40 @@ fun LandingView(navController: NavController) {
                 }
 
                 Spacer(modifier = Modifier.height(10.dp)) // Reduced spacer size
-
-                Button(
-                    modifier = Modifier
-                        .height(30.dp)
-                        .padding(vertical = 2.dp)
-                        .fillMaxWidth(0.6f),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
-                    onClick = { navController.navigate(Screen.ActivityRun.route) }
-                ) {
-                    Text(
-                        text = "Begin Session",
-                        modifier = Modifier.padding(2.dp),
-                        color = MaterialTheme.colors.onPrimary,
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(fontSize = 10.sp)
-                    )
+                if(userLoggedIn){
+                    Button(
+                        modifier = Modifier
+                            .height(30.dp)
+                            .padding(vertical = 2.dp)
+                            .fillMaxWidth(0.6f),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
+                        onClick = { navController.navigate(Screen.ActivityRun.route) }
+                    ) {
+                        Text(
+                            text = "Begin Session",
+                            modifier = Modifier.padding(2.dp),
+                            color = MaterialTheme.colors.onPrimary,
+                            textAlign = TextAlign.Center,
+                            style = TextStyle(fontSize = 10.sp)
+                        )
+                    }
+                }else{
+                    Button(
+                        modifier = Modifier
+                            .height(30.dp)
+                            .padding(vertical = 2.dp)
+                            .fillMaxWidth(0.6f),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
+                        onClick = { }
+                    ) {
+                        Text(
+                            text = "Begin Session",
+                            modifier = Modifier.padding(2.dp),
+                            color = MaterialTheme.colors.onPrimary,
+                            textAlign = TextAlign.Center,
+                            style = TextStyle(fontSize = 10.sp)
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.height(10.dp)) // Reduced spacer size
 
