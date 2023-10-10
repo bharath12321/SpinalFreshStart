@@ -1,6 +1,8 @@
 package com.example.spinalfreshstart
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.opengl.Matrix
 import android.os.Bundle
@@ -87,6 +89,7 @@ class ModelActivity : Activity() {
         0.9f, 1.0f, 1.4f, 0.7f, 1.7f, 2.6f
     )
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_model)
@@ -108,6 +111,8 @@ class ModelActivity : Activity() {
         updateFirebaseData(0F)
 
         backButton.setOnClickListener {
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
 
