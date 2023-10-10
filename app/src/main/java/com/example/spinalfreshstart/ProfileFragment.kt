@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 
@@ -20,7 +21,6 @@ class ProfileFragment : Fragment() {
     private var mParam1: String? = null
     private var mParam2: String? = null
     private val logoutButton: Button? = null
-
     inner class Stopwatch : Activity() {
         private val seconds = 0
         private val bending = false
@@ -45,6 +45,7 @@ class ProfileFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
         val logoutButton = rootView.findViewById<Button>(R.id.Logout_profile)
+
         if (logoutButton != null) {
             logoutButton.setOnClickListener {
                 FirebaseAuth.getInstance().signOut()
@@ -56,10 +57,10 @@ class ProfileFragment : Fragment() {
             println("Logout button not found...")
         }
 
-
         // Inflate the layout for this fragment
         return rootView
     }
+
 
     companion object {
         // TODO: Rename parameter arguments, choose names that match
