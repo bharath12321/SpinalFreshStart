@@ -60,6 +60,7 @@ fun RunScreen(navController: NavController, context: Context) {
     var angleValue = remember { mutableStateOf(20.0f)}
     var vibrate = remember { mutableStateOf(false) }
     var wearSend: WearSender = WearSender(context)
+    var harmAngle: Float = 100.0f
     var prevState: Int = 0//state 0 = init
 
     var timerRunningState by remember { mutableStateOf(TimerState.STOPPED) }
@@ -78,15 +79,12 @@ fun RunScreen(navController: NavController, context: Context) {
     fun playTimer(time: Int, phone: Boolean){
 
         if(timerRunningState == TimerState.STOPPED){
-            if(phone){
-                timerRunningState = TimerState.RUNNING
-                timerValue.value = time
-            }else{
-                timerRunningState = TimerState.RUNNING
+            if(!phone){
                 manageTimer = !manageTimer
-                timerValue.value = time
             }
-
+            timerRunningState = TimerState.RUNNING
+            timerValue.value = time
+            harmAngle = ListenerService.harmAngle
         }
 
     }
@@ -159,8 +157,9 @@ fun RunScreen(navController: NavController, context: Context) {
     }
     // Simulating color change based on angle value
     LaunchedEffect(angleValue.value) {
-        vibrate.value = angleValue.value >= 80
-        backgroundColor = getColorForValue(angleValue.value)
+        var anglePercent = (angleValue.value * (100.0/harmAngle)).toFloat()
+        vibrate.value = anglePercent >= 80
+        backgroundColor = getColorForValue(anglePercent)
 
     }
     LaunchedEffect(key1 = timerRunningState) {

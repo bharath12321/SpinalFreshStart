@@ -149,6 +149,8 @@ class ModelActivity : Activity() {
                 isSessionActive = true
                 myRefFlag.setValue(1)
                 mobSend.sendMessage("/session",true.toString().toByteArray())
+                //needs to be swapped with actual harmAngle after merge
+                mobSend.sendMessage("harmAngle","80.0".toByteArray())
                 MyMobileService.wearSession = true
                 sessionElapsedTime = 0
                 sessionTimer.setTextColor(getColor(android.R.color.holo_green_light))
