@@ -47,16 +47,16 @@
 
     </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="360dp"
+                android:layout_width="371dp"
                 android:layout_height="550dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="430dp">
 
 
             <TextView
-                    android:layout_width="188dp"
-                    android:layout_height="28dp"
-                    android:text="Harmful Angle Duration:"
+                    android:layout_width="217dp"
+                    android:layout_height="49dp"
+                    android:text="  Harmful Angle Duration:"
                     android:textSize="15dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -65,24 +65,40 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textHarmfulAngle"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintHorizontal_bias="0.4"
-                    app:layout_constraintVertical_bias="0.101" />
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintVertical_bias="0.303" />
 
             <TextView
                     android:id="@+id/textHarmfulAngle"
-                    android:layout_width="151dp"
-                    android:layout_height="28dp"
+                    android:layout_width="64dp"
+                    android:layout_height="33dp"
                     android:text="@{homePage.harmfulAngleDuration}"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="14dp"
+                    android:textSize="20dp"
                     tools:ignore="MissingConstraints"
                     app:layout_constraintBottom_toTopOf="@+id/standing_text_id"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintVertical_bias="0.103"
+                    app:layout_constraintVertical_bias="0.252"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintHorizontal_bias="0.987" />
+                    app:layout_constraintHorizontal_bias="0.586" />
+
+            <TextView
+                    android:id="@+id/textHarmfulAngle1"
+                    android:layout_width="104dp"
+                    android:layout_height="29dp"
+                    android:text="seconds"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    tools:ignore="MissingConstraints"
+                    app:layout_constraintBottom_toTopOf="@+id/standing_text_id"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintVertical_bias="0.242"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.861" />
 
             <TextView
                     android:id="@+id/standing_text_id"

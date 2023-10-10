@@ -1,6 +1,7 @@
 package com.example.spinalfreshstart
 
 import android.app.Activity
+import android.graphics.Color
 import android.opengl.Matrix
 import android.os.Bundle
 import android.os.Handler
@@ -49,7 +50,9 @@ class ModelActivity : Activity() {
     private var angleSampleIndex = 0 //Keeping track of angle in array
     private var isSessionActive = false
     private var isAnimationRunning = false
+    private var isCalibrateClicked = false
     private var sessionElapsedTime: Long = 0
+    private lateinit var dynamicAngle: TextView
 
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var firebaseTimer: Timer? = null
@@ -105,10 +108,15 @@ class ModelActivity : Activity() {
         val backButton = findViewById<Button>(R.id.backButton)
         val startSessionButton = findViewById<Button>(R.id.startSessionButton)
         val endSessionButton = findViewById<Button>(R.id.endSessionButton)
+        val calibrateButton = findViewById<Button>(R.id.calibrateButton)
         val sessionTimer = findViewById<TextView>(R.id.sessionStatusTextView)
+
         mobSend = MobileSender(applicationContext)
 
         val myRefFlag: DatabaseReference = database.getReference("sessionActive")
+        dynamicAngle = findViewById(R.id.dynamicAngleView)
+        updateFirebaseData(0F)
+
         fun WearChecker(){
             coroutineScope.launch{
                 while(isActive){
@@ -144,7 +152,7 @@ class ModelActivity : Activity() {
                 mobSend.sendMessage("/session",true.toString().toByteArray())
                 MyMobileService.wearSession = true
 
-            } else
+            }  else
             {
                 isSessionActive = true
                 myRefFlag.setValue(1)
@@ -155,11 +163,12 @@ class ModelActivity : Activity() {
                 sessionElapsedTime = 0
                 sessionTimer.setTextColor(getColor(android.R.color.holo_green_light))
                 sessionTimer.text = "Current Session: 00:00"
+                angleSampleIndex = 0
 
                 val sessionHandler = Handler(Looper.getMainLooper())
                 sessionHandler.post(object : Runnable {
                     override fun run() {
-                        if(isSessionActive == true) {
+                        if(isSessionActive) {
                             sessionElapsedTime++
 
                             val minutes = TimeUnit.SECONDS.toMinutes(sessionElapsedTime)
@@ -194,7 +203,30 @@ class ModelActivity : Activity() {
                 firebaseTimer = null
             }
 
+            angleSampleIndex = 0
+
         }
+
+        calibrateButton.setOnClickListener {
+
+            if(isAnimationRunning) {
+                Toast.makeText(this, "Session is currently active", Toast.LENGTH_SHORT).show()
+                Log.d("MyApp", "Session is already active")
+            } else{
+                isCalibrateClicked = true
+            }
+
+            if(isCalibrateClicked) {
+                Toast.makeText(this, "Calibration is in process", Toast.LENGTH_SHORT).show()
+                Log.d("MyApp", "Calibration is in process")
+                dynamicAngle.setTextColor(Color.WHITE)
+            }
+
+            angleSampleIndex = 0
+
+        }
+
+        dynamicAngle.bringToFront()
 
     }
 
@@ -268,6 +300,57 @@ class ModelActivity : Activity() {
 
                             modelViewer.animator?.updateBoneMatrices()
                             modelViewer.render(currentTime)
+
+                            dynamicAngle.text = String.format("%.2f", currentSampleAngle)
+
+                            val largestValue = sampleAngles.maxOrNull()
+                            if (largestValue != null) {
+                                val lowerBound = 0.8 * largestValue
+                                if (currentSampleAngle in lowerBound..largestValue.toDouble()) {
+                                    // Display a toast message for a harmful position
+                                    dynamicAngle.setTextColor(Color.RED)
+                                } else {
+                                    dynamicAngle.setTextColor(Color.GREEN)
+                                }
+                            }
+                        }
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            if(isCalibrateClicked && !isAnimationRunning) {
+                executor.execute {
+                    try {
+                        var elapsedTime = (currentTime - startTime).toDouble() / 1_000_000_000
+
+                        handler.post {
+                            // Use sampleAngles and sampleAngularVelocities to control the animation
+                            angleSampleIndex = ((elapsedTime * animationSpeed) % sampleAngles.size).toInt()
+
+                            val currentSampleAngle = sampleAngles[angleSampleIndex.toInt()]
+                            val currentSampleAngularVelocity = sampleAngularVelocities[angleSampleIndex.toInt()]
+
+                            val rotationMatrix = FloatArray(16)
+                            Matrix.setRotateM(rotationMatrix, 0, currentSampleAngle, 1f, 0f, 0f) // Rotate around the X axis
+
+                            // Only apply rotation matrix to Spine_53 entity
+                            modelViewer.asset?.getFirstEntityByName("Spine_53")?.setTransform(rotationMatrix)
+
+                            modelViewer.animator?.updateBoneMatrices()
+                            modelViewer.render(currentTime)
+
+                            if (angleSampleIndex == sampleAngles.size - 1) {
+                                // Stop the animation by setting isCalibrateClicked to false
+                                isCalibrateClicked = false
+
+                                Toast.makeText(this@ModelActivity, "Calibration complete", Toast.LENGTH_SHORT).show()
+                                angleSampleIndex = 0
+                            }
+
+                            dynamicAngle.text = String.format("%.2f", currentSampleAngle)
+
                         }
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
@@ -341,5 +424,4 @@ class ModelActivity : Activity() {
         input.read(bytes)
         return ByteBuffer.wrap(bytes)
     }
-
 }
