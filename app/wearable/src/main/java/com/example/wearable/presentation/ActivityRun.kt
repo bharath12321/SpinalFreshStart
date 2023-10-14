@@ -37,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.util.Log
 import com.example.wearable.R
 import com.example.wearable.presentation.theme.SpinalFreshStartWearTheme
 
@@ -60,7 +61,7 @@ fun RunScreen(navController: NavController, context: Context) {
     var angleValue = remember { mutableStateOf(20.0f)}
     var vibrate = remember { mutableStateOf(false) }
     var wearSend: WearSender = WearSender(context)
-    var harmAngle: Float = 100.0f
+    var harmAngle: Float = 50.0f
     var prevState: Int = 0//state 0 = init
 
     var timerRunningState by remember { mutableStateOf(TimerState.STOPPED) }
@@ -172,11 +173,10 @@ fun RunScreen(navController: NavController, context: Context) {
     LaunchedEffect(vibrate.value){
         if(vibrate.value){
 
-            println("every 5 seconds")
             if(vibrator.hasVibrator()) {
-                println("has vibrator")
+                Log.d("vibrator","has vibrator")
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
-                    println("new vibration")
+                    Log.d("vibrator","new vibrator")
                     vibrator.vibrate(
                         VibrationEffect.createOneShot(
                             1000,
@@ -186,7 +186,7 @@ fun RunScreen(navController: NavController, context: Context) {
                     delay(1000L)
                     vibrator.cancel()
                 }else{
-                    println("old vibration")
+                    Log.d("vibrator","old vibrator")
                     @Suppress("DEPRECATION")
                     vibrator.vibrate(1000)
                     delay(1000)

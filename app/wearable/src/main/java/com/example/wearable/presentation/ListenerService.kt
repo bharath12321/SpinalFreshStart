@@ -11,12 +11,12 @@ class ListenerService : WearableListenerService() {
         var liveAngle: Float = 20.0f
         var phoneSession: Boolean = false
         var phoneTimer: Int = 0
-        var harmAngle: Float = 100.0f
+        var harmAngle: Float = 50.0f
 
     }
     override fun onMessageReceived(messageEvent: MessageEvent) {
         super.onMessageReceived(messageEvent)
-        Log.d("reciever","a message was recieved")
+        //Log.d("reciever","a message was recieved")
         if ("/SentFromPhone/email" == messageEvent.path) {
             if(String(messageEvent.data) == "Successful Login") {
                 userEmail = "Connected"
