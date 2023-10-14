@@ -158,7 +158,7 @@ fun RunScreen(navController: NavController, context: Context) {
     }
     // Simulating color change based on angle value
     LaunchedEffect(angleValue.value) {
-        var anglePercent = (angleValue.value * (100.0/harmAngle)).toFloat()
+        var anglePercent = (angleValue.value * (100.0/(harmAngle*(100f/80f)))).toFloat()
         vibrate.value = anglePercent >= 80
         backgroundColor = getColorForValue(anglePercent)
 
