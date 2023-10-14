@@ -30,7 +30,6 @@ class homePage : Fragment() {
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
-    private lateinit var mobSend: MobileSender
 
     private lateinit var lineGraphView: GraphView
 
@@ -76,7 +75,7 @@ class homePage : Fragment() {
 //        }
 
         val modelActivity = ModelActivity()
-        mobSend = modelActivity.mobSend
+        val mobSend = modelActivity.mobSend
         val series1: LineGraphSeries<DataPoint> = LineGraphSeries()
         var dataIndex = 0
         val handler = Handler(Looper.getMainLooper())
