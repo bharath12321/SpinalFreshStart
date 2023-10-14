@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mSend = MobileSender(this)
         auth = FirebaseAuth.getInstance()
-        //textView = findViewById(R.id.user_details_main);
+
         user = auth!!.currentUser
         if (user == null) {
             val intent = Intent(applicationContext, Login::class.java)
