@@ -168,7 +168,7 @@ class ModelActivity : Activity() {
         {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get the value from the DataSnapshot
-                harmAngle = dataSnapshot.getValue(Float::class.java)!!
+                harmAngle = dataSnapshot.getValue(Double::class.java)?.toFloat() ?: 50f
             }
 
             override fun onCancelled(error: DatabaseError) {
