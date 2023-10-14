@@ -49,7 +49,7 @@ class ModelActivity : Activity() {
     private lateinit var surfaceView: SurfaceView
     private lateinit var choreographer: Choreographer
     private lateinit var modelViewer: ModelViewer
-    private lateinit var mobSend: MobileSender
+    lateinit var mobSend: MobileSender
 
     private var angleSampleIndex = 0 //Keeping track of angle in array
     private var isSessionActive = false
@@ -162,19 +162,6 @@ class ModelActivity : Activity() {
 
         val myRefFlag: DatabaseReference = database.getReference("sessionActive")
         //harmfulAngle is for watch not tested yet...
-        val harmfulAngleRef = database.getReference("harmfulAngle")
-        var harmAngle = 50f
-        harmfulAngleRef.addValueEventListener(object : ValueEventListener
-        {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get the value from the DataSnapshot
-                harmAngle = dataSnapshot.getValue(Double::class.java)?.toFloat() ?: 50f
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                //do nothing.
-            }
-        })
         dynamicAngle = findViewById(R.id.dynamicAngleView)
         updateFirebaseData(0F)
 
@@ -221,7 +208,6 @@ class ModelActivity : Activity() {
                 myRefFlag.setValue(1)
                 mobSend.sendMessage("/session",true.toString().toByteArray())
                 //needs to be swapped with actual harmAngle after merge
-                mobSend.sendMessage("/harmAngle",harmAngle.toString().toByteArray())
                 MyMobileService.wearSession = true
                 sessionElapsedTime = 0
                 sessionTimer.setTextColor(getColor(android.R.color.holo_green_light))

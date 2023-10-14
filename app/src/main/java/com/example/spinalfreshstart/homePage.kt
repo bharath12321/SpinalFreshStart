@@ -30,6 +30,7 @@ class homePage : Fragment() {
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
+    private lateinit var mobSend: MobileSender
 
     private lateinit var lineGraphView: GraphView
 
@@ -48,7 +49,6 @@ class homePage : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_home_page, container, false)
-
         lineGraphView = view.findViewById(R.id.graphModel)
 
       //  val timerOne = view.findViewById<Chronometer>(R.id.chronometerOne)
@@ -76,6 +76,7 @@ class homePage : Fragment() {
 //        }
 
         val modelActivity = ModelActivity()
+        mobSend = modelActivity.mobSend
         val series1: LineGraphSeries<DataPoint> = LineGraphSeries()
         var dataIndex = 0
         val handler = Handler(Looper.getMainLooper())
@@ -86,6 +87,7 @@ class homePage : Fragment() {
             val max = series1.highestValueY;
             val min = series1.lowestValueY;
             var harmfulAngle = (max-min)*(0.8)+min;
+            mobSend.sendMessage("/harmfulAngle",harmfulAngle.toFloat().toString().toByteArray())
             var harmfulAngleMyRef: DatabaseReference = modelActivity.database.getReference("harmfulAngle")
             harmfulAngleMyRef.setValue(harmfulAngle)
 
