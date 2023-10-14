@@ -1,6 +1,7 @@
 package com.example.spinalfreshstart
 
 import akka.http.scaladsl.server.RejectionHandler
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -48,38 +49,36 @@ class homePage : Fragment() {
 
         lineGraphView = view.findViewById(R.id.graphModel)
 
-        val timerOne = view.findViewById<Chronometer>(R.id.chronometerOne)
-        val timerTwo = view.findViewById<Chronometer>(R.id.chronometerTwo)
+      //  val timerOne = view.findViewById<Chronometer>(R.id.chronometerOne)
+      //  val timerTwo = view.findViewById<Chronometer>(R.id.chronometerTwo)
 
-        val startTimerOne = view.findViewById<Button>(R.id.startbuttonTimerOne)
-        val stopTimerOne = view.findViewById<Button>(R.id.stopbuttonTimerOne)
-        val startTimerTwo = view.findViewById<Button>(R.id.startbuttonTimerTwo)
-        val stopTimerTwo = view.findViewById<Button>(R.id.stopbuttonTimerTwo)
-
-
-        startTimerOne.setOnClickListener {
-
-            timerOne.base = SystemClock.elapsedRealtime()
-            timerOne.start()
-        }
-        stopTimerOne.setOnClickListener {
-            timerOne.stop()
-        }
-        startTimerTwo.setOnClickListener {
-            timerTwo.base = SystemClock.elapsedRealtime()
-            timerTwo.start()
-        }
-        stopTimerTwo.setOnClickListener {
-            timerTwo.stop()
-        }
-
+//        val startTimerOne = view.findViewById<Button>(R.id.startbuttonTimerOne)
+//        val stopTimerOne = view.findViewById<Button>(R.id.stopbuttonTimerOne)
+//        val startTimerTwo = view.findViewById<Button>(R.id.startbuttonTimerTwo)
+    //    val timer = view.findViewById<Button>(R.id.chronometerTwo)
+//
+//
+//        startTimerOne.setOnClickListener {
+//            timerOne.base = SystemClock.elapsedRealtime()
+//            timerOne.start()
+//        }
+//        stopTimerOne.setOnClickListener {
+//            timerOne.stop()
+//        }
+//        startTimerTwo.setOnClickListener {
+//            timerTwo.base = SystemClock.elapsedRealtime()
+//            timerTwo.start()
+//        }
+//        stopTimerTwo.setOnClickListener {
+//            timerTwo.stop()
+//        }
 
         val modelActivity = ModelActivity()
         val series1: LineGraphSeries<DataPoint> = LineGraphSeries()
         var dataIndex = 0
         val handler = Handler(Looper.getMainLooper())
         var time = 0.0
-        var maxLimit = modelActivity.sampleAngles.size - 1
+        var maxLimit = modelActivity.sampleAngles2.size - 1
 
         fun harmfulAngleFun() {
             val max = series1.highestValueY;
@@ -87,6 +86,24 @@ class homePage : Fragment() {
             var harmfulAngle = (max-min)*(0.8)+min;
             var harmfulAngleMyRef: DatabaseReference = modelActivity.database.getReference("harmfulAngle")
             harmfulAngleMyRef.setValue(harmfulAngle)
+
+            //harmful angle
+            val harmfulAngleTextView1 = view?.findViewById<TextView>(R.id.harmfulAngleNew)
+            val floatHarmfulAngle = String.format("%.2f", harmfulAngle.toFloat()).toFloat()
+            harmfulAngleTextView1?.text= floatHarmfulAngle.toString()
+
+            //max angle
+            val maxAngleTextView = view?.findViewById<TextView>(R.id.maxAngleValue)
+            val floatMaxAngle = String.format("%.2f", max.toFloat()).toFloat()
+            maxAngleTextView?.text= floatMaxAngle.toString()
+
+            //min angle
+            val minAngleTextView = view?.findViewById<TextView>(R.id.minAngleValue)
+            val floatMinAngle = String.format("%.2f", min.toFloat()).toFloat()
+            minAngleTextView?.text= floatMinAngle.toString()
+
+
+
 
             val values = series1.getValues(min,max)
             var count1 = 0.0
@@ -117,8 +134,8 @@ class homePage : Fragment() {
 
         val newRun = object : Runnable {
             override fun run(){
-                if(dataIndex != modelActivity.sampleAngles.size) {
-                    val angleData = modelActivity.sampleAngles[dataIndex]
+                if(dataIndex != modelActivity.sampleAngles2.size) {
+                    val angleData = modelActivity.sampleAngles2[dataIndex]
                     val dataPoint = DataPoint(time, angleData.toDouble())
                     series1.appendData(dataPoint, true, maxLimit)
                     println("working!")
