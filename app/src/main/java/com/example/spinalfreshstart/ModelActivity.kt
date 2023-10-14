@@ -73,6 +73,48 @@ class ModelActivity : Activity() {
         18.4f, 18.4f, 18.5f, 18.5f, 18.5f
     )
 
+    //Sample angle data: Set 2 for testing
+    val sampleAngles2 = arrayOf(
+        0.0f, 0.5f, 0.3f, 0.1f, 0.2f, 0.5f, 0.9f, 1.3f, 1.9f, 2.5f,
+        3.2f, 4.0f, 4.9f, 5.9f, 6.9f, 7.9f, 8.9f, 9.9f, 12.0f, 13.2f,
+        14.6f, 16.0f, 17.4f, 19.0f, 20.4f, 21.9f, 23.2f, 24.6f, 26.0f, 27.5f,
+        29.2f, 31.0f, 32.5f, 33.7f, 34.7f, 36.0f, 37.5f, 39.2f, 41.1f, 42.9f,
+        44.5f, 45.8f, 47.0f, 48.3f, 49.5f, 50.4f, 51.3f, 52.1f, 52.9f, 53.7f,
+        54.5f, 55.5f, 56.5f, 57.1f, 57.3f, 57.6f, 58.0f, 58.3f, 58.6f, 58.7f,
+        59.0f, 59.3f, 59.6f, 60.0f, 60.4f, 60.8f, 61.3f, 61.9f, 62.4f, 62.8f,
+        63.1f, 63.4f, 63.8f, 64.2f, 64.5f, 64.8f, 65.2f, 65.6f, 65.9f, 66.2f,
+        66.4f, 66.8f, 67.1f, 67.3f, 67.3f, 67.4f, 67.3f, 67.3f, 67.4f, 67.5f,
+        67.7f, 67.7f, 67.5f, 67.2f, 66.9f, 66.5f, 65.8f, 64.9f, 63.7f, 62.3f,
+        61.0f, 59.6f, 58.3f, 57.0f, 55.8f, 54.2f, 52.5f, 50.7f, 48.8f, 46.6f,
+        44.3f, 42.3f, 40.1f, 37.8f, 35.3f, 32.9f, 30.7f, 28.9f, 27.2f, 25.5f,
+        23.8f, 22.0f, 20.2f, 18.6f, 17.1f, 15.6f, 14.3f, 13.2f, 12.0f, 10.7f,
+        9.4f, 8.3f, 7.4f, 6.7f, 6.2f, 5.8f, 5.5f, 5.1f, 4.9f, 4.7f, 4.4f,
+        4.3f, 4.2f, 4.2f, 4.1f, 4.0f, 4.0f, 3.9f, 3.9f, 4.0f, 4.0f, 4.0f,
+        4.0f, 4.0f, 3.9f, 3.9f, 4.2f, 4.4f, 4.5f, 4.5f, 4.6f, 4.7f, 4.7f, 4.8f, 4.8f
+    )
+
+    //Sample angle data: Set 3 for testing
+    val sampleAngles3 = arrayOf(
+        0.0f, 0.2f, 0.2f, 0.2f, 0.2f, 0.1f, 0.2f, 0.2f, 0.2f, 0.2f,
+        0.3f, 0.5f, 1.2f, 1.8f, 2.4f, 3.3f, 4.6f, 6.1f, 7.4f, 8.5f,
+        9.4f, 10.4f, 11.5f, 12.6f, 13.8f, 15.0f, 16.5f, 18.1f, 19.7f, 21.1f,
+        22.1f, 23.2f, 24.6f, 26.3f, 28.0f, 29.7f, 31.5f, 33.6f, 35.5f,
+        36.8f, 37.7f, 38.4f, 39.5f, 41.1f, 43.3f, 45.6f, 47.4f, 48.6f,
+        49.7f, 50.8f, 52.0f, 53.4f, 54.6f, 55.7f, 56.7f, 57.5f, 58.2f,
+        58.7f, 59.3f, 60.1f, 60.8f, 61.5f, 62.2f, 62.7f, 63.2f, 63.9f,
+        64.5f, 65.0f, 65.5f, 65.9f, 66.5f, 66.8f, 66.7f, 66.4f, 66.1f,
+        66.0f, 66.0f, 66.1f, 66.2f, 66.1f, 66.1f, 66.1f, 66.3f, 66.5f,
+        66.7f, 66.7f, 66.7f, 66.7f, 66.6f, 66.4f, 66.3f, 66.4f, 66.5f,
+        66.6f, 66.9f, 67.2f, 67.6f, 67.9f, 68.2f, 68.6f, 69.0f, 69.3f,
+        69.5f, 69.8f, 70.1f, 70.3f, 70.6f, 70.9f, 71.2f, 71.1f, 70.8f,
+        70.3f, 69.4f, 68.1f, 66.6f, 64.8f, 63.0f, 61.7f, 60.3f, 58.2f,
+        55.8f, 53.3f, 50.8f, 48.2f, 45.1f, 41.8f, 38.6f, 35.8f, 33.1f,
+        30.6f, 28.0f, 25.4f, 22.8f, 20.6f, 18.6f, 16.7f, 14.8f, 12.9f,
+        11.2f, 9.6f, 8.1f, 6.7f, 5.5f, 4.6f, 3.9f, 3.4f, 3.2f, 3.1f, 3.2f, 3.3f
+    )
+
+
+
     val sampleAngularVelocities = arrayOf(
         0.0f, 14.3f, 14.8f, 13.5f, 11.7f, 10.4f, 8.3f, 8.9f, 12.2f, 15.8f,
         17.5f, 16.6f, 14.0f, 8.5f, 3.9f, 9.8f, 19.1f, 23.2f, 28.1f, 30.4f,
@@ -246,7 +288,7 @@ class ModelActivity : Activity() {
 
                         handler.post {
                             // Use sampleAngles and sampleAngularVelocities to control the animation
-                             angleSampleIndex = ((elapsedTime * animationSpeed) % sampleAngles.size).toInt()
+                             angleSampleIndex = ((elapsedTime * animationSpeed) % sampleAngles2.size).toInt()
 
 //                            // Reset startTime if we've reached the end of the animation
 //                            if (sampleIndex < 1) {
@@ -255,11 +297,11 @@ class ModelActivity : Activity() {
 //                            }
 
                             if(isSessionActive) {
-                                updateFirebaseData(sampleAngles[angleSampleIndex])
+                                updateFirebaseData(sampleAngles2[angleSampleIndex])
                             }
 
-                            val currentSampleAngle = sampleAngles[angleSampleIndex.toInt()]
-                            val currentSampleAngularVelocity = sampleAngularVelocities[angleSampleIndex.toInt()]
+                            val currentSampleAngle = sampleAngles2[angleSampleIndex.toInt()]
+//                            val currentSampleAngularVelocity = sampleAngularVelocities[angleSampleIndex.toInt()]
 
                             val rotationMatrix = FloatArray(16)
                             Matrix.setRotateM(rotationMatrix, 0, currentSampleAngle, 1f, 0f, 0f) // Rotate around the X axis
@@ -272,7 +314,7 @@ class ModelActivity : Activity() {
 
                             dynamicAngle.text = String.format("%.2f", currentSampleAngle)
 
-                            val largestValue = sampleAngles.maxOrNull()
+                            val largestValue = sampleAngles2.maxOrNull()
                             if (largestValue != null) {
                                 val lowerBound = 0.8 * largestValue
                                 if (currentSampleAngle in lowerBound..largestValue.toDouble()) {
@@ -296,10 +338,10 @@ class ModelActivity : Activity() {
 
                         handler.post {
                             // Use sampleAngles and sampleAngularVelocities to control the animation
-                            angleSampleIndex = ((elapsedTime * animationSpeed) % sampleAngles.size).toInt()
+                            angleSampleIndex = ((elapsedTime * animationSpeed) % sampleAngles2.size).toInt()
 
-                            val currentSampleAngle = sampleAngles[angleSampleIndex.toInt()]
-                            val currentSampleAngularVelocity = sampleAngularVelocities[angleSampleIndex.toInt()]
+                            val currentSampleAngle = sampleAngles2[angleSampleIndex.toInt()]
+//                            val currentSampleAngularVelocity = sampleAngularVelocities[angleSampleIndex.toInt()]
 
                             val rotationMatrix = FloatArray(16)
                             Matrix.setRotateM(rotationMatrix, 0, currentSampleAngle, 1f, 0f, 0f) // Rotate around the X axis
@@ -310,7 +352,7 @@ class ModelActivity : Activity() {
                             modelViewer.animator?.updateBoneMatrices()
                             modelViewer.render(currentTime)
 
-                            if (angleSampleIndex == sampleAngles.size - 1) {
+                            if (angleSampleIndex == sampleAngles2.size - 1) {
                                 // Stop the animation by setting isCalibrateClicked to false
                                 isCalibrateClicked = false
 

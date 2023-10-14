@@ -76,7 +76,7 @@ class homePage : Fragment() {
         var dataIndex = 0
         val handler = Handler(Looper.getMainLooper())
         var time = 0.0
-        var maxLimit = modelActivity.sampleAngles.size - 1
+        var maxLimit = modelActivity.sampleAngles2.size - 1
 
         fun harmfulAngleFun() {
             val max = series1.highestValueY;
@@ -132,8 +132,8 @@ class homePage : Fragment() {
 
         val newRun = object : Runnable {
             override fun run(){
-                if(dataIndex != modelActivity.sampleAngles.size) {
-                    val angleData = modelActivity.sampleAngles[dataIndex]
+                if(dataIndex != modelActivity.sampleAngles2.size) {
+                    val angleData = modelActivity.sampleAngles2[dataIndex]
                     val dataPoint = DataPoint(time, angleData.toDouble())
                     series1.appendData(dataPoint, true, maxLimit)
                     println("working!")
