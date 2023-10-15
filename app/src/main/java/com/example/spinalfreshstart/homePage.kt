@@ -171,6 +171,7 @@ class homePage : Fragment() {
 
         handler.post(newRun)
         lineGraphView.animate()
+        lineGraphView.gridLabelRenderer.numHorizontalLabels = modelActivity.sampleAngles.size / 7
         series1.color = R.color.purple_200
         lineGraphView.addSeries(series1)
 

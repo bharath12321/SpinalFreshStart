@@ -32,19 +32,19 @@
             app:layout_constraintBottom_toTopOf="@+id/signInTitle"/>
 
 
-    <LinearLayout
-            android:layout_width="360dp"
-            android:layout_height="250dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="160dp">
+        <LinearLayout
+                android:layout_width="395dp"
+                android:layout_height="250dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="160dp">
 
-        <com.jjoe64.graphview.GraphView
-                android:id="@+id/graphModel"
-                android:layout_width="match_parent"
-                android:layout_height="250dp" />
+            <com.jjoe64.graphview.GraphView
+                    android:id="@+id/graphModel"
+                    android:layout_width="385dp"
+                    android:layout_height="250dp" />
 
 
-    </LinearLayout>
+        </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="371dp"
                 android:layout_height="550dp"
