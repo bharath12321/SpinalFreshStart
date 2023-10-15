@@ -16,14 +16,14 @@ import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 
 class MainActivity : ComponentActivity() {
+    companion object{
+        var selectedSession: Session? = null
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             WearApp(this)
         }
-    }
-    public fun sendMessage(){
-
     }
 
 }

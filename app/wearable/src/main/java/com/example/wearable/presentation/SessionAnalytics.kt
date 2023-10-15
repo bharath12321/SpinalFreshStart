@@ -43,9 +43,10 @@ SpinalFreshStartWearTheme {
             verticalArrangement = Arrangement.Center
 
         ){
-            AnalyticsItem("Standing")
+            var currentSession = MainActivity.selectedSession!!
+            AnalyticsItem(currentSession, "Standing Position")
             Spacer(modifier = Modifier.height(10.dp))
-            AnalyticsItem("Lifting")
+            AnalyticsItem(currentSession, "Lifting Position")
         }
     }
 }
@@ -53,15 +54,18 @@ SpinalFreshStartWearTheme {
 
 }
 @Composable
-fun AnalyticsItem(typeOfAnalysis: String){
+fun AnalyticsItem(session: Session, type: String){
     var imageResId = R.drawable.spine // Default image resource ID
     var message = "No analysis available"
-    if(typeOfAnalysis.contains("Lifting")){
+    var number = 0
+    if(type.contains("Lifting")){
         imageResId = R.drawable.liftingstick
         message = "Lifting Position"
-    }else if(typeOfAnalysis.contains("Standing")){
+        number = session.lifting
+    }else if(type.contains("Standing")){
         imageResId = R.drawable.standingstick
-        message = "Standing Poition"
+        message = "Standing Position"
+        number = session.standing
     }
     //should do above in separate function SetupVariables()
 
@@ -88,7 +92,7 @@ fun AnalyticsItem(typeOfAnalysis: String){
                     style = MaterialTheme.typography.title3
                 )
                 Text(
-                    text = "01:26",
+                    text = formatTime(number),
                     color = MaterialTheme.colors.onBackground,
                     style = MaterialTheme.typography.body2
                 )

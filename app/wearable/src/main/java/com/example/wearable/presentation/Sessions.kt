@@ -71,7 +71,9 @@ fun SessionsScreen(navController: NavController) {
 @Composable
 fun SessionItem(session: Session, navController: NavController){
     Box(modifier = Modifier
-        .clickable(enabled = true, onClick = { navController.navigate(Screen.Analytics.route) })
+        .clickable(enabled = true, onClick = { navController.navigate(Screen.Analytics.route)
+        MainActivity.selectedSession = session
+        })
         //.fillMaxWidth(0.7f)
         .fillMaxSize(0.7f)
         .background(Color(235 / 255f, 235 / 255f, 235 / 255f), shape = RoundedCornerShape(8.dp))
