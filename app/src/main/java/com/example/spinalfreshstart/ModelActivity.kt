@@ -200,6 +200,7 @@ class ModelActivity : Activity() {
                 Toast.makeText(this, "Session is currently active", Toast.LENGTH_SHORT).show()
                 Log.d("MyApp", "Session is already active")
                 mobSend.sendMessage("/session",true.toString().toByteArray())
+                mobSend.sendMessage("/harmAngle",homePage.harmAngle.toString().toByteArray())
                 MyMobileService.wearSession = true
 
             }  else
@@ -207,6 +208,7 @@ class ModelActivity : Activity() {
                 isSessionActive = true
                 myRefFlag.setValue(1)
                 mobSend.sendMessage("/session",true.toString().toByteArray())
+                mobSend.sendMessage("/harmAngle",homePage.harmAngle.toString().toByteArray())
                 //needs to be swapped with actual harmAngle after merge
                 MyMobileService.wearSession = true
                 sessionElapsedTime = 0

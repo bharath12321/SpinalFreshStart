@@ -11,7 +11,7 @@ class ListenerService : WearableListenerService() {
         var liveAngle: Float = 20.0f
         var phoneSession: Boolean = false
         var phoneTimer: Int = 0
-        var harmAngle: Float = 50.0f
+        var harmAngle: Float = 54.16f
 
     }
     override fun onMessageReceived(messageEvent: MessageEvent) {

@@ -32,7 +32,6 @@ class homePage : Fragment() {
     private var mParam2: String? = null
 
     private lateinit var lineGraphView: GraphView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -75,7 +74,6 @@ class homePage : Fragment() {
 //        }
 
         val modelActivity = ModelActivity()
-        val mobSend = modelActivity.mobSend
         val series1: LineGraphSeries<DataPoint> = LineGraphSeries()
         var dataIndex = 0
         val handler = Handler(Looper.getMainLooper())
@@ -86,7 +84,7 @@ class homePage : Fragment() {
             val max = series1.highestValueY;
             val min = series1.lowestValueY;
             var harmfulAngle = (max-min)*(0.8)+min;
-            mobSend.sendMessage("/harmfulAngle",harmfulAngle.toFloat().toString().toByteArray())
+            harmAngle = harmfulAngle
             var harmfulAngleMyRef: DatabaseReference = modelActivity.database.getReference("harmfulAngle")
             harmfulAngleMyRef.setValue(harmfulAngle)
 
@@ -184,6 +182,7 @@ class homePage : Fragment() {
         // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
         private const val ARG_PARAM1 = "param1"
         private const val ARG_PARAM2 = "param2"
+        var harmAngle: Double? = null
 
         /**
          * Use this factory method to create a new instance of

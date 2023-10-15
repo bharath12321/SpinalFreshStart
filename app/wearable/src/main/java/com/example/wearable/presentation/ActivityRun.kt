@@ -61,7 +61,7 @@ fun RunScreen(navController: NavController, context: Context) {
     var angleValue = remember { mutableStateOf(20.0f)}
     var vibrate = remember { mutableStateOf(false) }
     var wearSend: WearSender = WearSender(context)
-    var harmAngle: Float = 50.0f
+    var harmAngle: Float = 54.16f
     var prevState: Int = 0//state 0 = init
 
     var timerRunningState by remember { mutableStateOf(TimerState.STOPPED) }
@@ -309,7 +309,11 @@ fun getNumGradient(angle: Int): Int{
 // Function to determine background color based on the value
 
 fun getColorForValue(value: Float): Color {
-    return colorGradient[getNumGradient(value.toInt()) %100]
+    var correctedValue = value.toInt()
+    if (correctedValue >= 100){
+        correctedValue -= 2
+    }
+    return colorGradient[getNumGradient(correctedValue) %100]
 
 }
 
